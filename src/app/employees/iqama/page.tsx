@@ -10,7 +10,8 @@ import {
   Building,
   Hash,
   User,
-  Upload
+  Upload,
+  Globe
 } from "lucide-react";
 import { useFirestore } from "@/hooks/useFirestore";
 import Modal from "@/components/shared/Modal";
