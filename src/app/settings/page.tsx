@@ -1,270 +1,564 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState } from "react";
 import { 
-  ShieldAlert, 
-  Trash2, 
-  Database, 
   Settings, 
-  Globe, 
-  Link as LinkIcon, 
-  Type, 
-  Save, 
-  RefreshCcw,
-  Download,
+  Bell, 
+  Palette, 
+  Layout, 
+  MessageSquare,
+  Eye,
+  Save,
   CheckCircle2,
-  AlertTriangle,
-  X,
-  Lock,
-  Plus
+  Clock,
+  FileText
 } from "lucide-react";
-import { doc, getDoc, setDoc, addDoc, collection } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import { cn } from "@/lib/utils";
 
 export default function SettingsPage() {
-  const [loading, setLoading] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
-  const [config, setConfig] = useState({
-    siteName: "قرافتي ERP",
-    logoUrl: "",
-    faviconUrl: "",
-    autoBackup: true,
+
+  // States matching UI
+  const [personalAlerts, setPersonalAlerts] = useState({
+    docsExpiry: true,
+    tasks: true,
+    systemUpdates: true,
+    browserAlerts: true,
+    emailAlerts: true,
   });
 
-  const [newPage, setNewPage] = useState({ name: "", group: "main" });
-  const [showNukeModal, setShowNukeModal] = useState(false);
-  const [adminPassword, setAdminPassword] = useState("");
-  const [nukeStep, setNukeStep] = useState(1);
+  const [identity, setIdentity] = useState({
+    siteName: "شركة سمو الإدارية",
+    logoUrl: "https://j.top4top.io/p_37563f6gd1.png",
+    faviconUrl: "https://j.top4top.io/p_37563f6gd1.png",
+    accentColor: "gold",
+    sidebarColor: "default",
+    fontFamily: "cairo",
+    viewMode: "cards",
+  });
 
-  // Load Config
-  useEffect(() => {
-    const loadConfig = async () => {
-      const docRef = doc(db, "settings", "global");
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setConfig(docSnap.data() as any);
-      }
-    };
-    loadConfig();
-  }, []);
+  const [displayPrefs, setDisplayPrefs] = useState({
+    cardSize: "S",
+    designStyle: "premium",
+    reportStyle: "modern",
+    enableExpiryAlerts: true,
+    daysToAlert: "60",
+  });
 
-  const handleSaveConfig = async () => {
-    setLoading(true);
-    try {
-      await setDoc(doc(db, "settings", "global"), config);
-      setSaveSuccess(true);
-      setTimeout(() => setSaveSuccess(false), 3000);
-    } catch (error) {
-      alert("خطأ في حفظ الإعدادات");
-    }
-    setLoading(false);
+  const [whatsapp, setWhatsapp] = useState({
+    enabled: true,
+    phoneNumber: "9665XXXXXXX",
+    apiKey: "*********************",
+    alertDays: "30",
+    messageTemplate: "تنبيه: إقامة الموظف {name} ستنتهي بتاريخ {date}. يرجى التجديد.",
+  });
+
+  const handleSave = () => {
+    setSaveSuccess(true);
+    setTimeout(() => setSaveSuccess(false), 3000);
   };
 
-  const handleCreatePage = async () => {
-    if (!newPage.name) return alert("يرجى إدخال اسم الصفحة");
-    setLoading(true);
-    try {
-      await addDoc(collection(db, "custom_pages"), {
-        label: newPage.name,
-        groupId: newPage.group,
-        createdAt: new Date()
-      });
-      alert("تم إضافة الصفحة الجديدة بنجاح!");
-      setNewPage({ name: "", group: "main" });
-    } catch (e) {
-      alert("خطأ في إنشاء الصفحة");
-    }
-    setLoading(false);
-  };
-
-  const handleNuke = () => {
-    if (adminPassword === "admin123") {
-      setNukeStep(2);
-      setTimeout(() => setNukeStep(3), 3000);
-    } else {
-      alert("كلمة المرور غير صحيحة!");
-    }
-  };
+  const Toggle = ({ checked, onChange }: { checked: boolean, onChange: () => void }) => (
+    <button 
+      onClick={onChange}
+      className={cn(
+        "w-12 h-6 rounded-full relative transition-all duration-300 shrink-0",
+        checked ? "bg-secondary" : "bg-white/10"
+      )}
+    >
+      <div 
+        className={cn(
+          "absolute top-1 w-4 h-4 bg-primary rounded-full transition-all duration-300 shadow-md",
+          checked ? "left-7" : "left-1"
+        )}
+      />
+    </button>
+  );
 
   return (
-    <div className="max-w-6xl mx-auto space-y-10 pb-20 font-rubik">
-      <div className="flex items-center justify-between">
+    <div className="space-y-12 font-rubik pb-20">
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-black mb-2">إعدادات النظام المركزية</h1>
-          <p className="text-sidebar-text font-medium text-lg">تخصيص الهوية البصرية وإدارة أمان البيانات.</p>
+          <h1 className="text-4xl font-black mb-2 tracking-tight text-white flex items-center gap-4">
+            إعدادات النظام
+            <span className="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-secondary/10 text-secondary border border-secondary/20 flex items-center gap-2">
+               الإدارة العليا <Settings size={12} />
+            </span>
+          </h1>
+          <p className="text-sidebar-text font-medium text-lg">تخصيص هوية النظام، إشعارات واتساب، وإدارة صلاحيات الوصول.</p>
         </div>
-        <button 
-          onClick={handleSaveConfig}
-          disabled={loading}
-          className="bg-secondary text-primary px-10 py-4 rounded-[2rem] font-black text-sm flex items-center gap-3 shadow-xl shadow-secondary/20 hover:shadow-secondary/30 transition-all active:scale-95 disabled:opacity-50"
-        >
-          {saveSuccess ? <CheckCircle2 size={20} /> : <Save size={20} />}
-          {saveSuccess ? "تم الحفظ بنجاح" : "حفظ التغييرات"}
-        </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        <div className="lg:col-span-2 space-y-8">
-          {/* Dynamic Page Generator */}
-          <div className="glass p-10 rounded-[4rem] border border-white/5 bg-white/[0.01]">
-            <h3 className="text-xl font-black mb-8 flex items-center gap-3 text-secondary">
-               <Plus /> إضافة قسم أو صفحة جديدة
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div className="space-y-2">
-                 <label className="text-xs font-black text-sidebar-text uppercase px-4">اسم الصفحة</label>
-                 <input 
-                   value={newPage.name}
-                   onChange={(e) => setNewPage({...newPage, name: e.target.value})}
-                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm outline-none focus:ring-2 focus:ring-secondary/20"
-                   placeholder="مثال: أرشيف الوثائق"
-                 />
-              </div>
-              <div className="space-y-2">
-                 <label className="text-xs font-black text-sidebar-text uppercase px-4">القسم التابع له</label>
-                 <select 
-                   value={newPage.group}
-                   onChange={(e) => setNewPage({...newPage, group: e.target.value})}
-                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm outline-none"
-                 >
-                    <option value="main">الرئيسية</option>
-                    <option value="employees">شؤون الموظفين</option>
-                    <option value="licenses">المنشأة</option>
-                    <option value="finance">المالية</option>
-                    <option value="admin">الإدارة</option>
-                 </select>
-              </div>
+      {/* 1. تفضيلات التنبيهات الشخصية */}
+      <div className="glass p-12 rounded-[4rem] border border-white/5 bg-white/[0.01]">
+         <div className="flex items-center justify-between mb-12">
+            <div>
+               <h2 className="text-3xl font-black text-white mb-2 flex items-center gap-4">
+                  تفضيلات التنبيهات الشخصية
+                  <div className="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary">
+                     <Bell size={24} />
+                  </div>
+               </h2>
+               <p className="text-sidebar-text">إدارة قنوات التنبيه وأنواع الإشعارات التي ترغب في استلامها.</p>
             </div>
-            <button 
-              onClick={handleCreatePage}
-              disabled={loading}
-              className="w-full p-5 bg-secondary/10 border border-secondary/20 rounded-[2rem] text-secondary font-black text-xs uppercase hover:bg-secondary hover:text-primary transition-all disabled:opacity-50"
-            >
-               تأكيد إضافة الصفحة للنظام
-            </button>
-          </div>
+         </div>
 
-          {/* Visual Identity Section */}
-          <div className="glass p-10 rounded-[4rem] border border-white/5 bg-white/[0.01]">
-            <h3 className="text-xl font-black mb-8 flex items-center gap-3 text-secondary">
-               <Globe /> الهوية البصرية للموقع
-            </h3>
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
             <div className="space-y-6">
-              <div className="space-y-2">
-                 <label className="text-xs font-black text-sidebar-text uppercase px-4">اسم الموقع</label>
-                 <input 
-                   value={config.siteName}
-                   onChange={(e) => setConfig({...config, siteName: e.target.value})}
-                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm outline-none focus:ring-2 focus:ring-secondary/20"
-                 />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                   <label className="text-xs font-black text-sidebar-text uppercase px-4">رابط الشعار</label>
-                   <input 
-                     value={config.logoUrl}
-                     onChange={(e) => setConfig({...config, logoUrl: e.target.value})}
-                     className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm outline-none"
-                   />
-                </div>
-                <div className="space-y-2">
-                   <label className="text-xs font-black text-sidebar-text uppercase px-4">رابط الأيقونة</label>
-                   <input 
-                     value={config.faviconUrl}
-                     onChange={(e) => setConfig({...config, faviconUrl: e.target.value})}
-                     className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm outline-none"
-                   />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Backup Management Section */}
-          <div className="glass p-10 rounded-[4rem] border border-white/5 bg-white/[0.01]">
-            <h3 className="text-xl font-black mb-8 flex items-center gap-3 text-secondary">
-               <Database /> إدارة النسخ الاحتياطي والبيانات
-            </h3>
-            
-            <div className="flex items-center justify-between p-6 bg-white/5 rounded-[2.5rem] border border-white/5 mb-6">
-               <div>
-                  <h4 className="font-bold text-sm">النسخ الاحتياطي التلقائي</h4>
-                  <p className="text-xs text-sidebar-text">حفظ نسخة من البيانات كل 24 ساعة في السحابة.</p>
+               <h4 className="text-sm font-black text-white/30 uppercase tracking-[0.2em] mb-4">أنواع التنبيهات</h4>
+               
+               <div className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl">
+                  <div className="text-right">
+                     <h5 className="font-bold text-white mb-1">انتهاء صلاحية الوثائق</h5>
+                     <p className="text-xs text-sidebar-text">تنبيهات عند اقتراب انتهاء الوثائق الرسمية.</p>
+                  </div>
+                  <Toggle checked={personalAlerts.docsExpiry} onChange={() => setPersonalAlerts({...personalAlerts, docsExpiry: !personalAlerts.docsExpiry})} />
                </div>
-               <button 
-                 onClick={() => setConfig({...config, autoBackup: !config.autoBackup})}
-                 className={cn(
-                   "w-14 h-8 rounded-full relative transition-all duration-300",
-                   config.autoBackup ? "bg-secondary" : "bg-white/10"
-                 )}
-               >
-                  <motion.div 
-                    animate={{ x: config.autoBackup ? 28 : 4 }}
-                    className="absolute top-1 left-1 w-6 h-6 bg-primary rounded-full shadow-lg"
-                  />
-               </button>
+               
+               <div className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl">
+                  <div className="text-right">
+                     <h5 className="font-bold text-white mb-1">تكليفات المهام</h5>
+                     <p className="text-xs text-sidebar-text">تنبيهات عند إسناد مهمة جديدة لك.</p>
+                  </div>
+                  <Toggle checked={personalAlerts.tasks} onChange={() => setPersonalAlerts({...personalAlerts, tasks: !personalAlerts.tasks})} />
+               </div>
+
+               <div className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl">
+                  <div className="text-right">
+                     <h5 className="font-bold text-white mb-1">تحديثات النظام العامة</h5>
+                     <p className="text-xs text-sidebar-text">تنبيهات عن الميزات الجديدة والتحسينات.</p>
+                  </div>
+                  <Toggle checked={personalAlerts.systemUpdates} onChange={() => setPersonalAlerts({...personalAlerts, systemUpdates: !personalAlerts.systemUpdates})} />
+               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-               <button className="flex items-center justify-center gap-2 p-5 bg-white/5 border border-white/5 rounded-[2rem] text-xs font-black uppercase tracking-widest hover:bg-white/10 transition-all">
-                  <RefreshCcw size={16} className="text-secondary" />
-                  مزامنة سحابية الآن
-               </button>
-               <button className="flex items-center justify-center gap-2 p-5 bg-white/5 border border-white/5 rounded-[2rem] text-xs font-black uppercase tracking-widest hover:bg-white/10 transition-all">
-                  <Download size={16} className="text-secondary" />
-                  تحميل نسخة CSV
-               </button>
+            <div className="space-y-6">
+               <h4 className="text-sm font-black text-white/30 uppercase tracking-[0.2em] mb-4">قنوات التنبيه</h4>
+               
+               <div className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl">
+                  <div className="text-right">
+                     <h5 className="font-bold text-white mb-1">تنبيهات المتصفح</h5>
+                     <p className="text-xs text-sidebar-text">استلام تنبيهات فورية داخل النظام.</p>
+                  </div>
+                  <Toggle checked={personalAlerts.browserAlerts} onChange={() => setPersonalAlerts({...personalAlerts, browserAlerts: !personalAlerts.browserAlerts})} />
+               </div>
+               
+               <div className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl">
+                  <div className="text-right">
+                     <h5 className="font-bold text-white mb-1">تنبيهات البريد الإلكتروني</h5>
+                     <p className="text-xs text-sidebar-text">استلام ملخص أسبوعي وتقارير على البريد.</p>
+                  </div>
+                  <Toggle checked={personalAlerts.emailAlerts} onChange={() => setPersonalAlerts({...personalAlerts, emailAlerts: !personalAlerts.emailAlerts})} />
+               </div>
             </div>
-          </div>
-        </div>
+         </div>
 
-
-        <div className="lg:col-span-1 space-y-8">
-           <div className="glass p-10 rounded-[4rem] border border-rose-500/20 bg-rose-500/[0.02]">
-              <div className="w-16 h-16 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500 mb-6">
-                 <ShieldAlert size={32} />
-              </div>
-              <h3 className="text-xl font-black text-rose-500 mb-4 text-right">منطقة الخطر</h3>
-              <p className="text-sidebar-text text-sm leading-relaxed mb-8">
-                 تحذير: العمليات هنا غير قابلة للتراجع.
-              </p>
-              <button 
-                onClick={() => setShowNukeModal(true)}
-                className="w-full p-5 bg-rose-500/10 border border-rose-500/20 rounded-[2rem] text-rose-500 font-black text-xs uppercase"
-              >
-                 حذف كافة بيانات الموقع
-              </button>
-           </div>
-        </div>
+         <div className="mt-10">
+            <button onClick={handleSave} className="bg-secondary text-primary px-8 py-4 rounded-[2rem] font-black text-sm shadow-xl hover:scale-105 transition-all flex gap-3 items-center">
+               <Save size={18} /> حفظ تفضيلات التنبيهات
+            </button>
+         </div>
       </div>
 
-      {/* Nuke Modal */}
-      <AnimatePresence>
-        {showNukeModal && (
-          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowNukeModal(false)} className="absolute inset-0 bg-black/80 backdrop-blur-xl" />
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative w-full max-w-lg bg-[#0a192f] border border-rose-500/30 rounded-[3rem] p-12 text-center">
-              {nukeStep === 1 && (
-                <div className="space-y-8">
-                  <div className="w-24 h-24 bg-rose-500/20 rounded-full flex items-center justify-center mx-auto text-rose-500"><AlertTriangle size={50} /></div>
-                  <div>
-                    <h2 className="text-2xl font-black text-rose-500 mb-2">تأكيد الحذف النهائي</h2>
-                    <p className="text-sidebar-text text-sm">أدخل كلمة مرور الأدمن للتأكيد.</p>
+      {/* 2. تخصيص النظام والهوية */}
+      <div className="glass p-12 rounded-[4rem] border border-white/5 bg-white/[0.01]">
+         <div className="flex items-center justify-between mb-12">
+            <div>
+               <h2 className="text-3xl font-black text-white mb-2 flex items-center gap-4">
+                  تخصيص النظام والهوية
+                  <div className="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary">
+                     <Palette size={24} />
                   </div>
-                  <input type="password" value={adminPassword} onChange={(e) => setAdminPassword(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-center outline-none" placeholder="كلمة المرور" />
-                  <div className="flex gap-4">
-                    <button onClick={handleNuke} className="flex-1 bg-rose-600 text-white py-4 rounded-2xl font-black">تدمير البيانات</button>
-                    <button onClick={() => setShowNukeModal(false)} className="flex-1 bg-white/5 text-white py-4 rounded-2xl font-black">إلغاء</button>
+               </h2>
+               <p className="text-sidebar-text">تغيير اسم النظام، الألوان الأساسية، والشعار.</p>
+            </div>
+         </div>
+
+         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            
+            {/* Left Side (Actually Right Side visually for RTL) - Names & URLs */}
+            <div className="space-y-8 text-right order-2 lg:order-1">
+               <div className="space-y-4">
+                  <label className="text-xs font-black text-white/30 uppercase tracking-[0.2em] px-4">اسم النظام</label>
+                  <input 
+                    value={identity.siteName}
+                    onChange={(e) => setIdentity({...identity, siteName: e.target.value})}
+                    className="w-full bg-white/[0.02] border border-white/10 rounded-[2rem] py-5 px-8 text-lg outline-none focus:ring-4 focus:ring-secondary/10 text-right font-bold text-white" 
+                  />
+               </div>
+               <div className="space-y-4">
+                  <label className="text-xs font-black text-white/30 uppercase tracking-[0.2em] px-4">رابط الشعار (LOGO URL)</label>
+                  <input 
+                    value={identity.logoUrl}
+                    onChange={(e) => setIdentity({...identity, logoUrl: e.target.value})}
+                    className="w-full bg-white/[0.02] border border-white/10 rounded-[2rem] py-5 px-8 text-sm outline-none focus:ring-4 focus:ring-secondary/10 text-right font-mono text-sidebar-text" 
+                  />
+                  <p className="text-xs text-white/40 px-4">يفضل استخدام صورة بخلفية شفافة (PNG).</p>
+               </div>
+               <div className="space-y-4">
+                  <label className="text-xs font-black text-white/30 uppercase tracking-[0.2em] px-4">أيقونة المتصفح (FAVICON URL)</label>
+                  <input 
+                    value={identity.faviconUrl}
+                    onChange={(e) => setIdentity({...identity, faviconUrl: e.target.value})}
+                    className="w-full bg-white/[0.02] border border-white/10 rounded-[2rem] py-5 px-8 text-sm outline-none focus:ring-4 focus:ring-secondary/10 text-right font-mono text-sidebar-text" 
+                  />
+                  <p className="text-xs text-white/40 px-4">الأيقونة التي تظهر في تبويب المتصفح.</p>
+               </div>
+
+               <div className="pt-6">
+                  <h4 className="text-xs font-black text-white/30 uppercase tracking-[0.2em] mb-6">لون التمييز (ACCENT COLOR)</h4>
+                  <div className="flex flex-wrap justify-end gap-4">
+                     {[
+                        { id: 'gold', color: '#EAB308', name: 'ذهبي' },
+                        { id: 'blue', color: '#3B82F6', name: 'أزرق' },
+                        { id: 'green', color: '#10B981', name: 'أخضر' },
+                        { id: 'purple', color: '#8B5CF6', name: 'بنفسجي' },
+                        { id: 'red', color: '#EF4444', name: 'أحمر' },
+                        { id: 'orange', color: '#F97316', name: 'برتقالي' },
+                        { id: 'custom', color: '#EAB308', name: 'مخصص', isCustom: true },
+                     ].map(c => (
+                        <button 
+                           key={c.id}
+                           onClick={() => setIdentity({...identity, accentColor: c.id})}
+                           className={cn(
+                              "w-24 h-28 rounded-[2rem] flex flex-col items-center justify-center gap-3 transition-all border-2",
+                              identity.accentColor === c.id ? "border-secondary bg-white/5" : "border-white/5 bg-white/[0.01] hover:border-white/20"
+                           )}
+                        >
+                           <div className="w-10 h-10 rounded-full" style={{ backgroundColor: c.color }} />
+                           <span className="text-xs font-bold text-white/70">{c.name}</span>
+                        </button>
+                     ))}
                   </div>
-                </div>
-              )}
-              {nukeStep === 2 && <div className="py-10 text-center"><div className="w-20 h-20 border-8 border-rose-500/20 border-t-rose-500 rounded-full animate-spin mx-auto mb-6" /><h2 className="text-xl font-black text-rose-500 animate-pulse">جاري المسح...</h2></div>}
-              {nukeStep === 3 && <div className="py-10 text-center"><CheckCircle2 size={80} className="text-emerald-500 mx-auto mb-6" /><h2 className="text-xl font-black text-white">تم تصفير النظام بنجاح</h2><button onClick={() => window.location.reload()} className="mt-6 text-secondary underline">إعادة تحميل الصفحة</button></div>}
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+               </div>
+            </div>
+
+            {/* Right Side (Actually Left Side visually for RTL) - Fonts & Sidebars */}
+            <div className="space-y-12 text-right order-1 lg:order-2 border-l border-white/5 pl-10">
+               <div>
+                  <h4 className="text-xs font-black text-white/30 uppercase tracking-[0.2em] mb-6">لون القائمة الجانبية</h4>
+                  <div className="grid grid-cols-3 gap-4">
+                     {[
+                        { id: 'default', color: '#060B19', name: 'الافتراضي' },
+                        { id: 'royal_blue', color: '#1E3A8A', name: 'أزرق ملكي' },
+                        { id: 'purple_dark', color: '#4C1D95', name: 'بنفسجي' },
+                        { id: 'green_dark', color: '#064E3B', name: 'أخضر غامق' },
+                        { id: 'black', color: '#000000', name: 'أسود فاخر' },
+                        { id: 'gold_dark', color: '#422006', name: 'ذهبي غامق' },
+                     ].map(c => (
+                        <button 
+                           key={c.id}
+                           onClick={() => setIdentity({...identity, sidebarColor: c.id})}
+                           className={cn(
+                              "h-28 rounded-[2rem] flex flex-col items-center justify-center gap-3 transition-all border-2",
+                              identity.sidebarColor === c.id ? "border-secondary bg-white/5" : "border-white/5 bg-white/[0.01] hover:border-white/20"
+                           )}
+                        >
+                           <div className="w-12 h-12 rounded-full border border-white/10" style={{ backgroundColor: c.color }} />
+                           <span className="text-xs font-bold text-white/70">{c.name}</span>
+                        </button>
+                     ))}
+                  </div>
+               </div>
+
+               <div>
+                  <h4 className="text-xs font-black text-white/30 uppercase tracking-[0.2em] mb-6">نوع الخط الأساسي (TYPOGRAPHY)</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                     {[
+                        { id: 'cairo', name: 'Cairo (افتراضي)', style: 'font-cairo' },
+                        { id: 'tajawal', name: 'Tajawal', style: 'font-tajawal' },
+                        { id: 'almarai', name: 'Almarai', style: 'font-almarai' },
+                        { id: 'ibm', name: 'IBM Plex Sans', style: 'font-sans' },
+                        { id: 'inter', name: 'Inter (English Optimized)', style: 'font-sans' },
+                     ].map(f => (
+                        <button 
+                           key={f.id}
+                           onClick={() => setIdentity({...identity, fontFamily: f.id})}
+                           className={cn(
+                              "p-6 rounded-[2rem] flex flex-col items-center justify-center text-center gap-2 transition-all border-2",
+                              identity.fontFamily === f.id ? "border-secondary bg-white/5" : "border-white/5 bg-white/[0.01] hover:border-white/20"
+                           )}
+                        >
+                           <span className="font-bold text-white">{f.name}</span>
+                           <span className="text-[9px] text-sidebar-text">The quick brown fox jumps over the lazy dog</span>
+                        </button>
+                     ))}
+                  </div>
+               </div>
+            </div>
+
+         </div>
+
+         {/* عرض البطاقات والجدول */}
+         <div className="mt-12 pt-12 border-t border-white/5">
+            <h4 className="text-xs font-black text-white/30 uppercase tracking-[0.2em] mb-6 text-right">طريقة عرض الموظفين</h4>
+            <div className="grid grid-cols-2 gap-6">
+               <button 
+                  onClick={() => setIdentity({...identity, viewMode: 'cards'})}
+                  className={cn(
+                     "p-8 rounded-[2.5rem] flex flex-col items-center justify-center gap-4 transition-all border-2",
+                     identity.viewMode === 'cards' ? "border-secondary bg-white/5" : "border-white/5 bg-white/[0.01] hover:border-white/20"
+                  )}
+               >
+                  <Layout size={32} className={identity.viewMode === 'cards' ? "text-secondary" : "text-white/40"} />
+                  <span className="font-bold text-lg text-white">عرض البطاقات (Cards)</span>
+               </button>
+               <button 
+                  onClick={() => setIdentity({...identity, viewMode: 'list'})}
+                  className={cn(
+                     "p-8 rounded-[2.5rem] flex flex-col items-center justify-center gap-4 transition-all border-2",
+                     identity.viewMode === 'list' ? "border-secondary bg-white/5" : "border-white/5 bg-white/[0.01] hover:border-white/20"
+                  )}
+               >
+                  <Layout size={32} className={identity.viewMode === 'list' ? "text-secondary" : "text-white/40"} />
+                  <span className="font-bold text-lg text-white">عرض الجدول (List)</span>
+               </button>
+            </div>
+         </div>
+
+         <div className="mt-10">
+            <button onClick={handleSave} className="bg-secondary text-primary px-8 py-4 rounded-[2rem] font-black text-sm shadow-xl hover:scale-105 transition-all flex gap-3 items-center">
+               <Save size={18} /> حفظ إعدادات الهوية
+            </button>
+         </div>
+      </div>
+
+      {/* 3. تفضيلات عرض البطاقات */}
+      <div className="glass p-12 rounded-[4rem] border border-white/5 bg-white/[0.01]">
+         <div className="space-y-12">
+            <div>
+               <h4 className="text-xs font-black text-white/30 uppercase tracking-[0.2em] mb-6 text-right flex items-center justify-end gap-3">
+                  حجم البطاقات <Layout size={16}/>
+               </h4>
+               <div className="flex gap-4 justify-end">
+                  {[
+                     { id: 'S', name: 'صغير', icon: 'S' },
+                     { id: 'M', name: 'متوسط', icon: 'M' },
+                     { id: 'L', name: 'كبير', icon: 'L' },
+                     { id: 'simple', name: 'بسيط', icon: <FileText size={16}/> },
+                  ].map(size => (
+                     <button 
+                        key={size.id}
+                        onClick={() => setDisplayPrefs({...displayPrefs, cardSize: size.id})}
+                        className={cn(
+                           "w-32 h-32 rounded-[2rem] flex flex-col items-center justify-center gap-3 transition-all border-2",
+                           displayPrefs.cardSize === size.id ? "border-secondary bg-white/5" : "border-white/5 bg-white/[0.01] hover:border-white/20"
+                        )}
+                     >
+                        <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/60 font-black">
+                           {size.icon}
+                        </div>
+                        <span className="text-sm font-bold text-white">{size.name}</span>
+                     </button>
+                  ))}
+               </div>
+            </div>
+
+            <div>
+               <h4 className="text-xs font-black text-white/30 uppercase tracking-[0.2em] mb-6 text-right flex items-center justify-end gap-3">
+                  نمط التصميم <Palette size={16}/>
+               </h4>
+               <div className="flex gap-4 justify-end">
+                  {[
+                     { id: 'premium', name: 'فاخر' },
+                     { id: 'glassy', name: 'زجاجي' },
+                     { id: 'simple', name: 'بسيط' },
+                  ].map(style => (
+                     <button 
+                        key={style.id}
+                        onClick={() => setDisplayPrefs({...displayPrefs, designStyle: style.id})}
+                        className={cn(
+                           "w-32 h-32 rounded-[2rem] flex flex-col items-center justify-center gap-3 transition-all border-2",
+                           displayPrefs.designStyle === style.id ? "border-secondary bg-white/5" : "border-white/5 bg-white/[0.01] hover:border-white/20"
+                        )}
+                     >
+                        <span className="text-sm font-bold text-white">{style.name}</span>
+                     </button>
+                  ))}
+               </div>
+            </div>
+
+            <div>
+               <h4 className="text-xs font-black text-white/30 uppercase tracking-[0.2em] mb-6 text-right flex items-center justify-end gap-3">
+                  تصميم التقارير (REPORT TEMPLATES)
+               </h4>
+               <div className="grid grid-cols-4 gap-4">
+                  {[
+                     { id: 'modern', name: 'عصري (Modern)', desc: 'تصميم بلمسات زجاجية وألوان ذهبية' },
+                     { id: 'classic', name: 'كلاسيكي (Classic)', desc: 'تصميم رسمي تقليدي بخطوط واضحة' },
+                     { id: 'executive', name: 'تنفيذي (Executive)', desc: 'تصميم فاخر للمدراء والتقارير المالية' },
+                     { id: 'compact', name: 'مختصر (Compact)', desc: 'تصميم مكثف لتوفير الورق والمساحة' },
+                  ].map(template => (
+                     <button 
+                        key={template.id}
+                        onClick={() => setDisplayPrefs({...displayPrefs, reportStyle: template.id})}
+                        className={cn(
+                           "p-6 rounded-[2rem] flex flex-col justify-center text-right gap-2 transition-all border-2",
+                           displayPrefs.reportStyle === template.id ? "border-secondary bg-white/5" : "border-white/5 bg-white/[0.01] hover:border-white/20"
+                        )}
+                     >
+                        <span className="font-bold text-white">{template.name}</span>
+                        <span className="text-[10px] text-white/40 leading-relaxed">{template.desc}</span>
+                     </button>
+                  ))}
+               </div>
+            </div>
+
+            <div className="pt-10 border-t border-white/5 space-y-6">
+               <div className="flex items-center justify-between">
+                  <div className="text-right">
+                     <h4 className="font-bold text-white mb-1">إشعارات انتهاء الصلاحية</h4>
+                     <p className="text-xs text-sidebar-text">تحديد متى يرسل النظام تنبيهات للمسؤولين قبل انتهاء الوثائق.</p>
+                  </div>
+                  <Toggle checked={displayPrefs.enableExpiryAlerts} onChange={() => setDisplayPrefs({...displayPrefs, enableExpiryAlerts: !displayPrefs.enableExpiryAlerts})} />
+               </div>
+
+               <div className="bg-white/[0.02] border border-white/5 p-8 rounded-[3rem] flex items-center justify-between">
+                  <div className="flex gap-2">
+                     {['15 يوم', '30 يوم', '45 يوم', '60 يوم', '90 يوم'].map(day => (
+                        <button 
+                           key={day}
+                           onClick={() => setDisplayPrefs({...displayPrefs, daysToAlert: day})}
+                           className={cn(
+                              "px-6 py-3 rounded-3xl font-bold text-sm transition-all",
+                              displayPrefs.daysToAlert === day ? "bg-secondary text-primary" : "bg-white/5 text-white/60 hover:bg-white/10"
+                           )}
+                        >
+                           {day}
+                        </button>
+                     ))}
+                  </div>
+                  <div className="text-right flex items-center gap-4">
+                     <div>
+                        <h5 className="font-bold text-white">الأيام المتبقية للتنبيه</h5>
+                        <p className="text-xs text-white/40 mt-1">سيتم تفعيل الإشعارات عندما يبقى هذا العدد من الأيام.</p>
+                     </div>
+                     <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white/40">
+                        <Clock size={20} />
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+         </div>
+      </div>
+
+      {/* 4. تنبيهات واتساب الذكية */}
+      <div className="glass p-12 rounded-[4rem] border border-[#25D366]/20 bg-[#25D366]/[0.02] shadow-[0_0_50px_rgba(37,211,102,0.05)]">
+         <div className="flex items-center justify-between mb-12">
+            <div>
+               <h2 className="text-3xl font-black text-white mb-2 flex items-center gap-4">
+                  تنبيهات واتساب الذكية
+                  <div className="w-12 h-12 rounded-2xl bg-[#25D366]/10 flex items-center justify-center text-[#25D366]">
+                     <MessageSquare size={24} />
+                  </div>
+               </h2>
+               <p className="text-sidebar-text">إرسال تنبيهات تلقائية لانتهاء صلاحية الوثائق عبر واتساب.</p>
+            </div>
+         </div>
+
+         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div className="space-y-8 text-right order-2 lg:order-1">
+               <div className="space-y-4">
+                  <label className="text-xs font-black text-white/30 uppercase tracking-[0.2em] px-4">توقيت التنبيهات (أيام قبل الانتهاء)</label>
+                  <div className="flex flex-wrap justify-end gap-3">
+                     {['1 يوم', '3 يوم', '7 يوم', '15 يوم', '30 يوم'].map(day => (
+                        <button 
+                           key={day}
+                           onClick={() => setWhatsapp({...whatsapp, alertDays: day})}
+                           className={cn(
+                              "px-6 py-3 rounded-[1.5rem] font-bold text-sm transition-all",
+                              whatsapp.alertDays === day ? "bg-[#25D366] text-white" : "bg-white/5 text-white/60 hover:bg-white/10"
+                           )}
+                        >
+                           {day}
+                        </button>
+                     ))}
+                  </div>
+               </div>
+               
+               <div className="space-y-4">
+                  <label className="text-xs font-black text-white/30 uppercase tracking-[0.2em] px-4">قالب الرسالة</label>
+                  <textarea 
+                    value={whatsapp.messageTemplate}
+                    onChange={(e) => setWhatsapp({...whatsapp, messageTemplate: e.target.value})}
+                    className="w-full h-40 bg-white/[0.02] border border-white/10 rounded-[2rem] py-5 px-8 text-sm outline-none focus:ring-4 focus:ring-[#25D366]/10 text-right font-bold text-white resize-none" 
+                  />
+                  <p className="text-xs text-white/40 px-4">استخدم {"{name}"} لاسم الموظف و {"{date}"} لتاريخ الانتهاء.</p>
+               </div>
+            </div>
+
+            <div className="space-y-8 text-right order-1 lg:order-2">
+               <div className="flex items-center justify-between p-8 bg-white/[0.02] border border-white/5 rounded-[3rem]">
+                  <div className="text-right">
+                     <h5 className="font-bold text-white mb-1">تفعيل التنبيهات</h5>
+                     <p className="text-xs text-sidebar-text">إرسال رسائل تلقائية للمسؤولين.</p>
+                  </div>
+                  <button 
+                     onClick={() => setWhatsapp({...whatsapp, enabled: !whatsapp.enabled})}
+                     className={cn(
+                        "w-16 h-8 rounded-full relative transition-all duration-300",
+                        whatsapp.enabled ? "bg-[#25D366]" : "bg-white/10"
+                     )}
+                  >
+                     <div 
+                        className={cn(
+                           "absolute top-1 w-6 h-6 bg-white rounded-full transition-all duration-300 shadow-md",
+                           whatsapp.enabled ? "left-9" : "left-1"
+                        )}
+                     />
+                  </button>
+               </div>
+
+               <div className="space-y-4">
+                  <label className="text-xs font-black text-white/30 uppercase tracking-[0.2em] px-4">رقم هاتف المسؤول</label>
+                  <input 
+                    value={whatsapp.phoneNumber}
+                    onChange={(e) => setWhatsapp({...whatsapp, phoneNumber: e.target.value})}
+                    className="w-full bg-white/[0.02] border border-white/10 rounded-[2rem] py-5 px-8 text-lg outline-none focus:ring-4 focus:ring-[#25D366]/10 text-right font-mono tracking-widest text-sidebar-text" 
+                    dir="ltr"
+                  />
+               </div>
+               
+               <div className="space-y-4">
+                  <label className="text-xs font-black text-white/30 uppercase tracking-[0.2em] px-4">مفتاح (API (TWILIO/CLOUD</label>
+                  <input 
+                    type="password"
+                    value={whatsapp.apiKey}
+                    onChange={(e) => setWhatsapp({...whatsapp, apiKey: e.target.value})}
+                    className="w-full bg-white/[0.02] border border-white/10 rounded-[2rem] py-5 px-8 text-lg outline-none focus:ring-4 focus:ring-[#25D366]/10 text-right font-mono tracking-widest text-sidebar-text" 
+                    dir="ltr"
+                  />
+               </div>
+            </div>
+         </div>
+
+         <div className="mt-10">
+            <button onClick={handleSave} className="bg-[#25D366] text-white px-8 py-4 rounded-[2rem] font-black text-sm shadow-xl hover:scale-105 transition-all flex gap-3 items-center">
+               <Save size={18} /> حفظ إعدادات واتساب
+            </button>
+         </div>
+      </div>
+
+      {/* 5. معاينة تصميم التقرير */}
+      <div className="glass p-12 rounded-[4rem] border border-white/5 bg-white/[0.01]">
+         <div className="flex items-center justify-between">
+            <button className="bg-secondary text-primary px-10 py-5 rounded-[2.5rem] font-black text-lg shadow-xl shadow-secondary/20 hover:scale-105 transition-all flex gap-3 items-center">
+               فتح المعاينة <Eye size={20} />
+            </button>
+            <div className="text-right">
+               <h2 className="text-3xl font-black text-white mb-2 flex justify-end items-center gap-4">
+                  معاينة تصميم التقرير
+                  <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white/60">
+                     <FileText size={24} />
+                  </div>
+               </h2>
+               <p className="text-sidebar-text">عرض كيف سيظهر التقرير النهائي للمسؤولين بالهوية المختارة.</p>
+            </div>
+         </div>
+      </div>
+
     </div>
   );
 }
