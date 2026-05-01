@@ -20,6 +20,7 @@ interface License {
 
 export default function LicensesPage() {
   const { data: licenses, addItem, removeItem, loading } = useFirestore<License>("licenses");
+  const { data: crsList } = useFirestore<any>("crs");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState<Omit<License, 'id'>>({
     name: "",

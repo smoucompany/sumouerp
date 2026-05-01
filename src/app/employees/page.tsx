@@ -25,6 +25,7 @@ interface Employee {
 
 export default function EmployeesDBPage() {
   const { data: employees, addItem, removeItem, loading } = useFirestore<Employee>("employees");
+  const { data: crsList } = useFirestore<any>("crs");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState<Omit<Employee, 'id'>>({
     fullName: "",
@@ -283,10 +284,7 @@ export default function EmployeesDBPage() {
                     <CustomSelect 
                        label="" value={formData.crLink} 
                        onChange={(val) => setFormData({...formData, crLink: val})}
-                       options={[
-                         { value: "بدون ربط", label: "بدون ربط" },
-                         { value: "الشركة الرئيسية", label: "الشركة الرئيسية" }
-                       ]} 
+                       options={[{ value: "بدون ربط", label: "بدون ربط (مؤسسة رئيسية)" }, ...(crsList || []).map((cr: any) => ({ value: cr.companyName || cr.id, label: cr.companyName || cr.id }))]} 
                     />
                  </div>
               </div>

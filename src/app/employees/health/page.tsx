@@ -20,6 +20,7 @@ interface HealthCert {
 
 export default function HealthCertificatesPage() {
   const { data: certs, addItem, removeItem, loading } = useFirestore<HealthCert>("health_certs");
+  const { data: employeesList } = useFirestore<any>("employees");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState<Omit<HealthCert, 'id'>>({
     employeeId: "",

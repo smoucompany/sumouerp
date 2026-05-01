@@ -21,6 +21,7 @@ interface Iqama {
 
 export default function IqamasPage() {
   const { data: iqamas, addItem, removeItem, loading } = useFirestore<Iqama>("iqamas");
+  const { data: employeesList } = useFirestore<any>("employees");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState<Omit<Iqama, 'id'>>({
     employeeLink: "اختر الموظف...",
@@ -138,10 +139,7 @@ export default function IqamasPage() {
                     <CustomSelect 
                        label="" value={formData.employeeLink} 
                        onChange={(val) => setFormData({...formData, employeeLink: val})}
-                       options={[
-                         { value: "اختر الموظف...", label: "اختر الموظف..." },
-                         { value: "محمد عبد الله", label: "محمد عبد الله" }
-                       ]} 
+                       options={[{ value: "اختر الموظف...", label: "اختر الموظف..." }, ...(employeesList || []).map((emp: any) => ({ value: emp.fullName || emp.id, label: emp.fullName || emp.id }))]} 
                     />
                  </div>
 

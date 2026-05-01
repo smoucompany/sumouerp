@@ -17,6 +17,7 @@ interface Task {
 
 export default function SmartTasksPage() {
   const { data: tasks, addItem, removeItem } = useFirestore<Task>("tasks");
+  const { data: employeesList } = useFirestore<any>("employees");
   const [employeeId, setEmployeeId] = useState("اختر الموظف...");
   const [jobTitle, setJobTitle] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -106,11 +107,7 @@ export default function SmartTasksPage() {
                   <CustomSelect 
                      label="" value={employeeId} 
                      onChange={(val) => setEmployeeId(val)}
-                     options={[
-                        { value: "اختر الموظف...", label: "ابحث عن موظف بالاسم أو الرقم الوظيفي..." },
-                        { value: "محمد عبد الله", label: "محمد عبد الله - 1001" },
-                        { value: "أحمد العلي", label: "أحمد العلي - 1002" }
-                     ]} 
+                     options={[{ value: "اختر الموظف...", label: "اختر الموظف..." }, ...(employeesList || []).map((emp: any) => ({ value: emp.fullName || emp.id, label: emp.fullName || emp.id }))]} 
                   />
                </div>
 

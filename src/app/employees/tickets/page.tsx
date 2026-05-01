@@ -20,6 +20,7 @@ interface FlightTicket {
 
 export default function FlightTicketsPage() {
   const { data: tickets, addItem, removeItem, loading } = useFirestore<FlightTicket>("flight_tickets");
+  const { data: employeesList } = useFirestore<any>("employees");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState<Omit<FlightTicket, 'id'>>({
     employeeId: "اختر الموظف...",
@@ -150,10 +151,7 @@ export default function FlightTicketsPage() {
                     <CustomSelect 
                        label="" value={formData.employeeId} 
                        onChange={(val) => setFormData({...formData, employeeId: val})}
-                       options={[
-                         { value: "اختر الموظف...", label: "اختر الموظف..." },
-                         { value: "أحمد علي", label: "أحمد علي" }
-                       ]} 
+                       options={[{ value: "اختر الموظف...", label: "اختر الموظف..." }, ...(employeesList || []).map((emp: any) => ({ value: emp.fullName || emp.id, label: emp.fullName || emp.id }))]} 
                     />
                  </div>
 

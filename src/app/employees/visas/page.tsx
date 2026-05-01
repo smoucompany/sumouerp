@@ -21,6 +21,7 @@ interface Visa {
 
 export default function VisasPage() {
   const { data: visas, addItem, removeItem, loading } = useFirestore<Visa>("visas");
+  const { data: employeesList } = useFirestore<any>("employees");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState<Omit<Visa, 'id'>>({
     employeeLink: "اختر الموظف...",
@@ -149,10 +150,7 @@ export default function VisasPage() {
                     <CustomSelect 
                        label="" value={formData.employeeLink} 
                        onChange={(val) => setFormData({...formData, employeeLink: val})}
-                       options={[
-                         { value: "اختر الموظف...", label: "اختر الموظف..." },
-                         { value: "أحمد علي", label: "أحمد علي" }
-                       ]} 
+                       options={[{ value: "اختر الموظف...", label: "اختر الموظف..." }, ...(employeesList || []).map((emp: any) => ({ value: emp.fullName || emp.id, label: emp.fullName || emp.id }))]} 
                     />
                  </div>
 
