@@ -1,21 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { 
-  Settings, 
-  Bell, 
-  Palette, 
-  Layout, 
-  MessageSquare,
-  Eye,
-  Save,
-  CheckCircle2,
-  Clock,
-  FileText,
-  Building,
-  Plus,
-  ShieldAlert
-} from "lucide-react";
+import { Settings, Bell, Palette, Layout, MessageSquare, Eye, Save, CheckCircle2, Clock, FileText, Building, Plus, ShieldAlert, Printer, Download, Edit } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function SettingsPage() {

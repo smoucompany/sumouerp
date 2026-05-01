@@ -2,17 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
-import { 
-  Printer, 
-  FileText, 
-  ShieldCheck, 
-  CreditCard, 
-  Users, 
-  Globe, 
-  Stethoscope,
-  Filter,
-  Briefcase
-} from "lucide-react";
+import { Printer, FileText, ShieldCheck, CreditCard, Users, Globe, Stethoscope, Filter, Briefcase } from "lucide-react";
 import { motion } from "framer-motion";
 import ReportTemplate from "@/components/reports/ReportTemplate";
 import { cn } from "@/lib/utils";

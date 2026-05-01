@@ -43,23 +43,38 @@ export function useFirestore<T>(collectionName: string) {
   }, [collectionName]);
 
   const addItem = async (item: any) => {
-    await addDoc(collection(db, collectionName), {
-      ...item,
-      createdAt: new Date(),
-    });
+    try {
+      await addDoc(collection(db, collectionName), {
+        ...item,
+        createdAt: new Date(),
+      });
+    } catch (err: any) {
+      console.error("Error adding document: ", err);
+      alert("حدث خطأ أثناء الحفظ: " + err.message);
+    }
   };
 
   const updateItem = async (id: string, item: any) => {
-    const docRef = doc(db, collectionName, id);
-    await updateDoc(docRef, {
-      ...item,
-      updatedAt: new Date(),
-    });
+    try {
+      const docRef = doc(db, collectionName, id);
+      await updateDoc(docRef, {
+        ...item,
+        updatedAt: new Date(),
+      });
+    } catch (err: any) {
+      console.error("Error updating document: ", err);
+      alert("حدث خطأ أثناء التعديل: " + err.message);
+    }
   };
 
   const removeItem = async (id: string) => {
-    const docRef = doc(db, collectionName, id);
-    await deleteDoc(docRef);
+    try {
+      const docRef = doc(db, collectionName, id);
+      await deleteDoc(docRef);
+    } catch (err: any) {
+      console.error("Error removing document: ", err);
+      alert("حدث خطأ أثناء الحذف: " + err.message);
+    }
   };
 
   return { data, loading, error, addItem, updateItem, removeItem };

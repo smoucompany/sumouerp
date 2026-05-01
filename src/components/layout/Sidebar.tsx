@@ -4,24 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Users, 
-  ShieldCheck, 
-  CreditCard, 
-  Settings, 
-  FileText, 
-  ChevronDown,
-  Briefcase,
-  History,
-  Users2,
-  Calendar,
-  Globe,
-  Stethoscope,
-  BookOpen,
-  PieChart,
-  LogOut,
-  Sparkles
-} from "lucide-react";
+import { Users, ShieldCheck, CreditCard, Settings, FileText, ChevronDown, Briefcase, History, Users2, Calendar, Globe, Stethoscope, BookOpen, PieChart, LogOut, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const defaultGroups = [

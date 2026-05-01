@@ -1,19 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { 
-  Sparkles, 
-  ShieldCheck, 
-  History, 
-  ChevronDown,
-  Briefcase,
-  CheckCircle2,
-  Clock,
-  Loader2,
-  Save,
-  User,
-  Trash2
-} from "lucide-react";
+import { Sparkles, ShieldCheck, History, ChevronDown, Briefcase, CheckCircle2, Clock, Loader2, Save, User, Trash2, Printer, Download, Edit } from "lucide-react";
 import { useFirestore } from "@/hooks/useFirestore";
 import CustomSelect from "@/components/shared/Select";
 
@@ -225,9 +213,15 @@ export default function SmartTasksPage() {
                         <span className="text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full">{task.status}</span>
                      </div>
                   </div>
-                  <button onClick={() => removeItem(task.id!)} className="absolute bottom-4 left-4 p-2 text-rose-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-500/10 rounded-xl">
+                  <div className="absolute top-5 left-5 flex gap-2">
+
+                  <button className="p-3 text-secondary opacity-0 group-hover:opacity-100 transition-all hover:bg-secondary/10 rounded-xl" title="تعديل">
+                     <Edit size={16} />
+                  </button>
+<button onClick={() => removeItem(task.id!)} className="absolute bottom-4 left-4 p-2 text-rose-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-500/10 rounded-xl">
                      <Trash2 size={16} />
                   </button>
+</div>
                </div>
             ))}
             {tasks.length === 0 && (

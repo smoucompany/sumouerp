@@ -2,7 +2,7 @@
 
 import React from "react";
 import TasksList from "@/components/dashboard/TasksList";
-import { CheckCircle2, Clock, AlertCircle, Plus, Filter } from "lucide-react";
+import { CheckCircle2, Clock, AlertCircle, Plus, Filter, Printer, Download, Edit } from "lucide-react";
 
 export default function TasksPage() {
   return (

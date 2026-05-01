@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Bell, AlertCircle, FileCheck, CreditCard, Mail, Trash2, CheckSquare } from "lucide-react";
+import { Bell, AlertCircle, FileCheck, CreditCard, Mail, Trash2, CheckSquare, Printer, Download, Edit } from "lucide-react";
 
 const notifications = [
   { id: 1, title: "تنبيه انتهاء إقامة", desc: "إقامة الموظف أحمد الحربي تنتهي خلال 5 أيام.", time: "قبل 10 دقائق", icon: AlertCircle, color: "text-rose-500", bg: "bg-rose-500/10" },

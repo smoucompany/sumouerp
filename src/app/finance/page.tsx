@@ -1,20 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { 
-  DollarSign, 
-  TrendingUp, 
-  TrendingDown, 
-  Plus, 
-  Search, 
-  Trash2, 
-  Calendar,
-  CreditCard,
-  Building2,
-  FileText,
-  Save,
-  X
-} from "lucide-react";
+import { DollarSign, TrendingUp, TrendingDown, Plus, Search, Trash2, Calendar, CreditCard, Building2, FileText, Save, X, Printer, Download, Edit } from "lucide-react";
 import { useFirestore } from "@/hooks/useFirestore";
 import Modal from "@/components/shared/Modal";
 import StatCard from "@/components/dashboard/StatCard";
@@ -71,13 +58,21 @@ export default function FinancePage() {
           <h1 className="text-lg font-black mb-2 tracking-tight">سجلات المدفوعات والمالية</h1>
           <p className="text-sidebar-text font-medium text-sm">إدارة التدفقات النقدية والطلبات المالية بدقة متناهية.</p>
         </div>
-        <button 
-          onClick={() => setIsModalOpen(true)}
-          className="bg-secondary text-primary px-8 py-2 rounded-xl font-black text-sm flex items-center gap-2 shadow-xl shadow-secondary/20 hover:scale-105 transition-all"
-        >
-          <Plus size={16} />
-          إضافة طلب دفع جديد
-        </button>
+        <div className="flex items-center gap-3">
+          <button onClick={() => window.print()} className="bg-white/5 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-white/10 transition-all">
+            <Printer size={18} /> طباعة
+          </button>
+          <button className="bg-white/5 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-white/10 transition-all">
+            <Download size={18} /> تصدير
+          </button>
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="bg-secondary text-primary px-4 py-2 rounded-xl font-black text-sm flex items-center gap-2 shadow-2xl shadow-secondary/20 hover:scale-105 transition-all"
+          >
+            <Plus size={18} />
+            إضافة طلب دفع جديد
+          </button>
+        </div>
       </div>
 
       {/* Stats Cards */}
@@ -135,9 +130,15 @@ export default function FinancePage() {
                     </span>
                   </td>
                   <td className="py-6">
-                    <button onClick={() => removeItem(t.id!)} className="p-3 text-rose-500 hover:bg-rose-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-all">
+                    <div className="flex gap-2">
+
+                  <button className="p-3 text-secondary opacity-0 group-hover:opacity-100 transition-all hover:bg-secondary/10 rounded-xl" title="تعديل">
+                     <Edit size={16} />
+                  </button>
+<button onClick={() => removeItem(t.id!)} className="p-3 text-rose-500 hover:bg-rose-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-all">
                       <Trash2 size={18} />
                     </button>
+</div>
                   </td>
                 </tr>
               ))}

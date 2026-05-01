@@ -1,19 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { 
-  Stethoscope, 
-  Calendar, 
-  Plus, 
-  Trash2, 
-  Upload, 
-  User, 
-  Building2, 
-  Hash, 
-  Save, 
-  X,
-  FileText
-} from "lucide-react";
+import { Stethoscope, Calendar, Plus, Trash2, Upload, User, Building2, Hash, Save, X, FileText, Printer, Download, Edit } from "lucide-react";
 import { useFirestore } from "@/hooks/useFirestore";
 import Modal from "@/components/shared/Modal";
 import CustomSelect from "@/components/shared/Select";
@@ -66,13 +54,21 @@ export default function HealthCertificatesPage() {
           <h1 className="text-lg font-black mb-2 tracking-tight">الشهادات الصحية (كرت البلدية)</h1>
           <p className="text-sidebar-text font-medium text-sm">إدارة وتجديد الشهادات الصحية لضمان الامتثال للمعايير الصحية.</p>
         </div>
-        <button 
-          onClick={() => setIsModalOpen(true)}
-          className="bg-secondary text-primary px-8 py-2 rounded-2xl font-black text-sm flex items-center gap-2 shadow-xl shadow-secondary/20 hover:scale-105 transition-all"
-        >
-          <Plus size={16} />
-          إضافة شهادة صحية جديدة
-        </button>
+        <div className="flex items-center gap-3">
+          <button onClick={() => window.print()} className="bg-white/5 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-white/10 transition-all">
+            <Printer size={18} /> طباعة
+          </button>
+          <button className="bg-white/5 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-white/10 transition-all">
+            <Download size={18} /> تصدير
+          </button>
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="bg-secondary text-primary px-4 py-2 rounded-xl font-black text-sm flex items-center gap-2 shadow-2xl shadow-secondary/20 hover:scale-105 transition-all"
+          >
+            <Plus size={18} />
+            إضافة شهادة صحية جديدة
+          </button>
+        </div>
       </div>
 
       {/* Grid of Certificates */}
@@ -101,9 +97,15 @@ export default function HealthCertificatesPage() {
                     </div>
                  </div>
 
-                 <button onClick={() => removeItem(cert.id!)} className="absolute top-4 left-6 p-2 text-rose-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-500/10 rounded-lg">
+                 <div className="absolute top-5 left-5 flex gap-2">
+
+                  <button className="p-3 text-secondary opacity-0 group-hover:opacity-100 transition-all hover:bg-secondary/10 rounded-xl" title="تعديل">
+                     <Edit size={16} />
+                  </button>
+<button onClick={() => removeItem(cert.id!)} className=" p-2 text-rose-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-500/10 rounded-lg">
                     <Trash2 size={16} />
                  </button>
+</div>
               </div>
             ))}
          </div>

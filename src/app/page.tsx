@@ -1,18 +1,7 @@
 "use client";
 
 import React from "react";
-import { 
-  Users, 
-  FileText, 
-  AlertCircle, 
-  TrendingUp, 
-  Zap, 
-  Plus, 
-  Calendar, 
-  ArrowUpRight,
-  ShieldCheck,
-  CreditCard
-} from "lucide-react";
+import { Users, FileText, AlertCircle, TrendingUp, Zap, Plus, Calendar, ArrowUpRight, ShieldCheck, CreditCard, Printer, Download, Edit } from "lucide-react";
 import StatCard from "@/components/dashboard/StatCard";
 import FinancialChart from "@/components/dashboard/FinancialChart";
 import TasksList from "@/components/dashboard/TasksList";

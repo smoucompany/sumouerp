@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { File, Folder, Search, Grid, List, Download, Share2, MoreVertical, Plus } from "lucide-react";
+import { File, Folder, Search, Grid, List, Download, Share2, MoreVertical, Plus, Printer, Edit } from "lucide-react";
 
 const folders = [
   { name: "عقود الموظفين", count: 156, color: "text-blue-500" },

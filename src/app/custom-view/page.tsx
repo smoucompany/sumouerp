@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Plus, Search, Edit, Trash2, FileText, Database, AlertCircle, ArrowRight } from "lucide-react";
+import { Plus, Search, Edit, Trash2, FileText, Database, AlertCircle, ArrowRight, Printer, Download } from "lucide-react";
 import { useFirestore } from "@/hooks/useFirestore";
 import Modal from "@/components/shared/Modal";
 import { doc, getDoc } from "firebase/firestore";
@@ -82,12 +82,21 @@ function CustomViewContent() {
            <h1 className="text-lg font-black mb-2">{pageInfo.label}</h1>
            <p className="text-sidebar-text">إدارة بيانات القسم المخصص: {pageInfo.label}.</p>
         </div>
-        <button 
-          onClick={() => setIsModalOpen(true)}
-          className="bg-secondary text-primary px-8 py-2 rounded-xl font-black flex items-center gap-2 shadow-xl hover:scale-105 transition-all"
-        >
-          <Plus size={16} /> إضافة سجل جديد
-        </button>
+        <div className="flex items-center gap-3">
+          <button onClick={() => window.print()} className="bg-white/5 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-white/10 transition-all">
+            <Printer size={18} /> طباعة
+          </button>
+          <button className="bg-white/5 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-white/10 transition-all">
+            <Download size={18} /> تصدير
+          </button>
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="bg-secondary text-primary px-4 py-2 rounded-xl font-black text-sm flex items-center gap-2 shadow-2xl shadow-secondary/20 hover:scale-105 transition-all"
+          >
+            <Plus size={18} />
+            إضافة سجل جديد
+          </button>
+        </div>
       </div>
 
       <div className="glass p-4 rounded-3xl border border-white/5 bg-white/[0.01]">
@@ -104,9 +113,15 @@ function CustomViewContent() {
                       <div className="w-8 h-8 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary">
                          <FileText size={18} />
                       </div>
-                      <button onClick={() => removeItem(item.id!)} className="p-3 text-rose-500 hover:bg-rose-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-all">
+                      <div className="flex gap-2">
+
+                  <button className="p-3 text-secondary opacity-0 group-hover:opacity-100 transition-all hover:bg-secondary/10 rounded-xl" title="تعديل">
+                     <Edit size={16} />
+                  </button>
+<button onClick={() => removeItem(item.id!)} className="p-3 text-rose-500 hover:bg-rose-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-all">
                          <Trash2 size={18} />
                       </button>
+</div>
                    </div>
                    <h4 className="font-black text-lg mb-2">{item.name}</h4>
                    <p className="text-sidebar-text text-sm mb-6 leading-relaxed">{item.details}</p>

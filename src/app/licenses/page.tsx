@@ -1,20 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { 
-  ShieldCheck, 
-  Calendar, 
-  FileText, 
-  Plus, 
-  Search, 
-  Trash2, 
-  Upload, 
-  Hash, 
-  Save, 
-  Building,
-  Tag,
-  Link as LinkIcon
-} from "lucide-react";
+import { ShieldCheck, Calendar, FileText, Plus, Search, Trash2, Upload, Hash, Save, Building, Tag, Link as LinkIcon, Printer, Download, Edit } from "lucide-react";
 import { useFirestore } from "@/hooks/useFirestore";
 import Modal from "@/components/shared/Modal";
 import CustomSelect from "@/components/shared/Select";
@@ -67,13 +54,21 @@ export default function LicensesPage() {
           <h1 className="text-lg font-black mb-2 tracking-tight text-white">التراخيص والسجلات</h1>
           <p className="text-sidebar-text font-medium text-sm">إدارة التراخيص الحكومية والسجلات التجارية لضمان الالتزام بكافة الأنظمة.</p>
         </div>
-        <button 
-          onClick={() => setIsModalOpen(true)}
-          className="bg-secondary text-primary px-3 py-2 rounded-2xl font-black text-sm flex items-center gap-3 shadow-2xl shadow-secondary/20 hover:scale-105 transition-all"
-        >
-          <Plus size={22} />
-          إضافة ترخيص جديد
-        </button>
+        <div className="flex items-center gap-3">
+          <button onClick={() => window.print()} className="bg-white/5 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-white/10 transition-all">
+            <Printer size={18} /> طباعة
+          </button>
+          <button className="bg-white/5 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-white/10 transition-all">
+            <Download size={18} /> تصدير
+          </button>
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="bg-secondary text-primary px-4 py-2 rounded-xl font-black text-sm flex items-center gap-2 shadow-2xl shadow-secondary/20 hover:scale-105 transition-all"
+          >
+            <Plus size={18} />
+            إضافة ترخيص جديد
+          </button>
+        </div>
       </div>
 
       {/* Licenses Display */}
@@ -102,9 +97,15 @@ export default function LicensesPage() {
                     </div>
                  </div>
 
-                 <button onClick={() => removeItem(lic.id!)} className="absolute top-5 left-8 p-3 text-rose-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-500/10 rounded-xl">
+                 <div className="absolute top-5 left-5 flex gap-2">
+
+                  <button className="p-3 text-secondary opacity-0 group-hover:opacity-100 transition-all hover:bg-secondary/10 rounded-xl" title="تعديل">
+                     <Edit size={16} />
+                  </button>
+<button onClick={() => removeItem(lic.id!)} className=" p-3 text-rose-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-500/10 rounded-xl">
                     <Trash2 size={16} />
                  </button>
+</div>
               </div>
             ))}
          </div>

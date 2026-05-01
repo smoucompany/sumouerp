@@ -1,19 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { 
-  Globe, 
-  Plane, 
-  Trash2, 
-  Plus, 
-  Calendar,
-  Save,
-  Building2,
-  Hash,
-  User,
-  Upload,
-  FileText
-} from "lucide-react";
+import { Globe, Plane, Trash2, Plus, Calendar, Save, Building2, Hash, User, Upload, FileText, Printer, Download, Edit } from "lucide-react";
 import { useFirestore } from "@/hooks/useFirestore";
 import Modal from "@/components/shared/Modal";
 import CustomSelect from "@/components/shared/Select";
@@ -71,13 +59,21 @@ export default function VisasPage() {
           <h1 className="text-lg font-black mb-2 tracking-tight text-white">التأشيرات</h1>
           <p className="text-sidebar-text font-medium text-sm">متابعة تأشيرات الخروج والعودة وتأشيرات العمل الجديدة بدقة.</p>
         </div>
-        <button 
-          onClick={() => setIsModalOpen(true)}
-          className="bg-secondary text-primary px-3 py-2 rounded-2xl font-black text-sm flex items-center gap-3 shadow-2xl shadow-secondary/20 hover:scale-105 transition-all"
-        >
-          <Plus size={22} />
-          إضافة تأشيرة جديدة
-        </button>
+        <div className="flex items-center gap-3">
+          <button onClick={() => window.print()} className="bg-white/5 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-white/10 transition-all">
+            <Printer size={18} /> طباعة
+          </button>
+          <button className="bg-white/5 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-white/10 transition-all">
+            <Download size={18} /> تصدير
+          </button>
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="bg-secondary text-primary px-4 py-2 rounded-xl font-black text-sm flex items-center gap-2 shadow-2xl shadow-secondary/20 hover:scale-105 transition-all"
+          >
+            <Plus size={18} />
+            إضافة تأشيرة جديدة
+          </button>
+        </div>
       </div>
 
       {/* Visas Display */}
@@ -108,9 +104,15 @@ export default function VisasPage() {
                     </div>
                  </div>
 
-                 <button onClick={() => removeItem(v.id!)} className="absolute top-5 left-8 p-3 text-rose-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-500/10 rounded-xl">
+                 <div className="absolute top-5 left-5 flex gap-2">
+
+                  <button className="p-3 text-secondary opacity-0 group-hover:opacity-100 transition-all hover:bg-secondary/10 rounded-xl" title="تعديل">
+                     <Edit size={16} />
+                  </button>
+<button onClick={() => removeItem(v.id!)} className=" p-3 text-rose-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-500/10 rounded-xl">
                     <Trash2 size={16} />
                  </button>
+</div>
               </div>
             ))}
          </div>

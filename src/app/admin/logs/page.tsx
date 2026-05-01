@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { History, User, Search, Filter, ShieldCheck, LogIn, Edit, Trash2 } from "lucide-react";
+import { History, User, Search, Filter, ShieldCheck, LogIn, Edit, Trash2, Printer, Download } from "lucide-react";
 
 export default function ActivityLogsPage() {
   return (
