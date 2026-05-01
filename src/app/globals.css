@@ -95,10 +95,39 @@
   animation: float 5s ease-in-out infinite;
 }
 
-/* Force Rubik for Printing */
+/* Print Layout Optimization */
 @media print {
   body, html, * {
     font-family: var(--font-rubik), 'Rubik', sans-serif !important;
     direction: rtl !important;
+    color: #000 !important;
+    background: #fff !important;
+  }
+  
+  /* Hide unnecessary elements during printing */
+  aside, 
+  nav, 
+  header, 
+  button, 
+  .glass-card:hover,
+  .mesh-bg {
+    display: none !important;
+  }
+
+  /* Make main content full width */
+  main, .glass {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+  }
+
+  /* Ensure cards break nicely */
+  .glass-card {
+    page-break-inside: avoid;
+    border: 1px solid #ccc !important;
+    margin-bottom: 20px !important;
   }
 }

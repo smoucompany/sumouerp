@@ -215,7 +215,7 @@ export default function SmartTasksPage() {
                   <button className="p-3 text-secondary opacity-0 group-hover:opacity-100 transition-all hover:bg-secondary/10 rounded-xl" title="تعديل">
                      <Edit size={16} />
                   </button>
-<button onClick={() => removeItem(task.id!)} className="absolute bottom-4 left-4 p-2 text-rose-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-500/10 rounded-xl">
+<button onClick={() => { if(window.confirm('هل أنت متأكد من الحذف؟ لا يمكن التراجع عن هذا الإجراء.')) removeItem(task.id!); }} className="absolute bottom-4 left-4 p-2 text-rose-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-500/10 rounded-xl">
                      <Trash2 size={16} />
                   </button>
 </div>

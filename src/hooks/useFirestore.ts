@@ -48,9 +48,10 @@ export function useFirestore<T>(collectionName: string) {
         ...item,
         createdAt: new Date(),
       });
+      alert("✅ تم الحفظ بنجاح!");
     } catch (err: any) {
       console.error("Error adding document: ", err);
-      alert("حدث خطأ أثناء الحفظ: " + err.message);
+      alert("❌ حدث خطأ أثناء الحفظ: " + err.message);
     }
   };
 
@@ -61,9 +62,10 @@ export function useFirestore<T>(collectionName: string) {
         ...item,
         updatedAt: new Date(),
       });
+      alert("✅ تم التعديل بنجاح!");
     } catch (err: any) {
       console.error("Error updating document: ", err);
-      alert("حدث خطأ أثناء التعديل: " + err.message);
+      alert("❌ حدث خطأ أثناء التعديل: " + err.message);
     }
   };
 
@@ -71,9 +73,10 @@ export function useFirestore<T>(collectionName: string) {
     try {
       const docRef = doc(db, collectionName, id);
       await deleteDoc(docRef);
+      alert("✅ تم الحذف بنجاح!");
     } catch (err: any) {
       console.error("Error removing document: ", err);
-      alert("حدث خطأ أثناء الحذف: " + err.message);
+      alert("❌ حدث خطأ أثناء الحذف: " + err.message);
     }
   };
 
