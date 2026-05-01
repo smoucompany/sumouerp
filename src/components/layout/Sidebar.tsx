@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  LayoutDashboard, 
   Users, 
   ShieldCheck, 
   CreditCard, 
@@ -21,7 +20,6 @@ import {
   BookOpen,
   PieChart,
   LogOut,
-  ChevronLeft,
   Sparkles
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -62,7 +60,7 @@ const defaultGroups = [
   },
   {
     id: "finance",
-    title: "الالمالية",
+    title: "المالية",
     icon: CreditCard,
     items: [
       { label: "المدفوعات", href: "/finance", icon: CreditCard },
@@ -84,40 +82,41 @@ export default function Sidebar() {
   const pathname = usePathname();
   const [expandedGroups, setExpandedGroups] = useState<string[]>(["الرئيسية", "شؤون الموظفين"]);
   const [mounted, setMounted] = useState(false);
-  const [siteConfig, setSiteConfig] = useState({ siteName: "قرافتي ERP", logoUrl: "" });
+  const [siteConfig, setSiteConfig] = useState({ siteName: "Sumou ERP", logoUrl: "" });
   const [menuGroups, setMenuGroups] = useState(defaultGroups);
 
   useEffect(() => {
     setMounted(true);
     const loadSettings = async () => {
-      const { doc, onSnapshot, collection } = await import("firebase/firestore");
-      const { db } = await import("@/lib/firebase");
-      
-      // Global Settings
-      onSnapshot(doc(db, "settings", "global"), (doc) => {
-        if (doc.exists()) setSiteConfig(doc.data() as any);
-      });
-
-      // Custom Pages
-      onSnapshot(collection(db, "custom_pages"), (snapshot) => {
-        const customItems = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-        const newGroups = defaultGroups.map(group => {
-          const itemsForGroup = customItems.filter((item: any) => item.groupId === group.id);
-          return {
-            ...group,
-            items: [...group.items, ...itemsForGroup.map((item: any) => ({
-              label: item.label,
-              href: `/custom-view?id=${item.id}`,
-              icon: FileText
-            }))]
-          };
+      try {
+        const { doc, onSnapshot, collection } = await import("firebase/firestore");
+        const { db } = await import("@/lib/firebase");
+        
+        onSnapshot(doc(db, "settings", "global"), (doc) => {
+          if (doc.exists()) setSiteConfig(prev => ({ ...prev, ...doc.data() }));
         });
-        setMenuGroups(newGroups);
-      });
+
+        onSnapshot(collection(db, "custom_pages"), (snapshot) => {
+          const customItems = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+          const newGroups = defaultGroups.map(group => {
+            const itemsForGroup = customItems.filter((item: any) => item.groupId === group.id);
+            return {
+              ...group,
+              items: [...group.items, ...itemsForGroup.map((item: any) => ({
+                label: item.label,
+                href: `/custom-view?id=${item.id}`,
+                icon: FileText
+              }))]
+            };
+          });
+          setMenuGroups(newGroups);
+        });
+      } catch (err) {
+        console.error("Firebase load error", err);
+      }
     };
     loadSettings();
   }, []);
-
 
   const toggleGroup = (title: string) => {
     setExpandedGroups(prev => 
@@ -130,7 +129,7 @@ export default function Sidebar() {
   return (
     <div className="fixed right-6 top-6 bottom-6 w-72 z-50 font-rubik">
       <div className="h-full glass rounded-[3rem] flex flex-col overflow-hidden border border-white/10 shadow-2xl">
-        {/* Luxury Logo Section */}
+        {/* Logo Section */}
         <div className="p-8 pb-4 flex flex-col items-center text-center">
           <div className="w-16 h-16 mb-4 relative group">
             <div className="absolute inset-0 bg-secondary/20 rounded-2xl blur-xl group-hover:bg-secondary/40 transition-all duration-500"></div>
@@ -140,26 +139,26 @@ export default function Sidebar() {
               </div>
             ) : (
               <div className="relative w-full h-full bg-gradient-to-br from-secondary to-amber-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <span className="text-primary font-black text-3xl italic">G</span>
+                <span className="text-primary font-black text-3xl italic">S</span>
               </div>
             )}
           </div>
-          <h1 className="text-white font-black text-xl tracking-tight leading-none text-gradient">{siteConfig.siteName}</h1>
+          <h1 className="text-white font-black text-xl tracking-tight leading-none">{siteConfig.siteName}</h1>
           <div className="mt-2 px-3 py-1 bg-secondary/10 rounded-full border border-secondary/20">
-             <p className="text-[8px] text-secondary font-black uppercase tracking-[0.3em]">Premium ERP</p>
+             <p className="text-[8px] text-secondary font-black uppercase tracking-[0.3em]">Premium ERP Solution</p>
           </div>
         </div>
 
         {/* Navigation */}
         <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto custom-scrollbar">
           {menuGroups.map((group) => (
-            <div key={group.title} className="mb-2">
+            <div key={group.id} className="mb-2">
               <button 
                 onClick={() => toggleGroup(group.title)}
                 className="w-full flex items-center justify-between px-4 py-3 text-white/40 hover:text-white transition-all text-[11px] font-black uppercase tracking-widest group"
               >
                 <div className="flex items-center gap-3">
-                  <group.icon className="w-4 h-4 group-hover:text-secondary transition-colors" />
+                  <group.icon size={16} className="group-hover:text-secondary transition-colors" />
                   <span>{group.title}</span>
                 </div>
                 <ChevronDown className={cn(
@@ -176,32 +175,28 @@ export default function Sidebar() {
                     exit={{ height: 0, opacity: 0 }}
                     className="overflow-hidden space-y-1 pr-1"
                   >
-                    {group.items.map((item) => {
-                      const isActive = pathname === item.href;
-                      return (
-                        <Link key={item.href} href={item.href}>
-                          <div className={cn(
-                            "flex items-center gap-4 px-5 py-3 rounded-2xl text-sm transition-all relative group/item",
-                            isActive 
-                              ? "bg-gradient-to-l from-secondary/20 to-secondary/5 text-secondary font-bold border border-secondary/20" 
-                              : "hover:bg-white/[0.03] text-sidebar-text hover:text-white"
-                          )}>
-                            <item.icon className={cn(
-                              "w-4 h-4 transition-all duration-500",
-                              isActive ? "text-secondary scale-110 drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]" : "text-white/20 group-hover/item:text-secondary"
-                            )} />
-                            <span className="relative z-10">{item.label}</span>
-                            
-                            {isActive && (
-                              <motion.div 
-                                layoutId="active-line"
-                                className="absolute right-0 w-1 h-5 bg-secondary rounded-l-full shadow-[0_0_10px_rgba(234,179,8,0.8)]"
-                              />
-                            )}
-                          </div>
-                        </Link>
-                      );
-                    })}
+                    {group.items.map((item) => (
+                      <Link key={item.href} href={item.href}>
+                        <div className={cn(
+                          "flex items-center gap-4 px-5 py-3 rounded-2xl text-sm transition-all relative group/item",
+                          pathname === item.href 
+                            ? "bg-secondary/10 text-secondary font-bold border border-secondary/20" 
+                            : "hover:bg-white/[0.03] text-sidebar-text hover:text-white"
+                        )}>
+                          <item.icon size={16} className={cn(
+                            "transition-all duration-500",
+                            pathname === item.href ? "text-secondary scale-110" : "text-white/20 group-hover/item:text-secondary"
+                          )} />
+                          <span className="relative z-10">{item.label}</span>
+                          {pathname === item.href && (
+                            <motion.div 
+                              layoutId="active-line"
+                              className="absolute right-0 w-1 h-5 bg-secondary rounded-l-full"
+                            />
+                          )}
+                        </div>
+                      </Link>
+                    ))}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -209,21 +204,21 @@ export default function Sidebar() {
           ))}
         </nav>
 
-        {/* Mini Profile Footer */}
-        <div className="p-6 mt-auto">
-          <div className="bg-white/[0.03] p-4 rounded-3xl border border-white/5 flex items-center gap-4">
-             <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-primary font-black text-lg shadow-lg shadow-secondary/20">
-                أ
+        {/* Profile Footer */}
+        <div className="p-6 mt-auto border-t border-white/5">
+          <div className="bg-white/[0.03] p-4 rounded-3xl flex items-center gap-4 hover:bg-white/5 transition-all cursor-pointer group">
+             <div className="w-10 h-10 rounded-xl bg-secondary/20 flex items-center justify-center text-secondary font-black group-hover:scale-110 transition-transform">
+                S
              </div>
              <div className="flex-1 min-w-0">
                 <p className="text-white font-bold text-xs truncate">أدمن النظام</p>
                 <div className="flex items-center gap-1.5 mt-1">
                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                   <span className="text-[9px] text-emerald-500 font-black uppercase">Online</span>
+                   <span className="text-[9px] text-emerald-500 font-black uppercase tracking-widest">متصل الآن</span>
                 </div>
              </div>
              <button className="text-white/20 hover:text-rose-500 transition-colors">
-                <LogOut size={18} />
+                <LogOut size={16} />
              </button>
           </div>
         </div>

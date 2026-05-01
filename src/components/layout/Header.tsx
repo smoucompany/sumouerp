@@ -53,11 +53,18 @@ export default function Header() {
       </div>
 
       {/* Actions Section */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-6">
+        {/* Insight Core Indicator */}
+        <div className="hidden xl:flex items-center gap-3 px-5 py-2.5 bg-emerald-500/5 border border-emerald-500/10 rounded-full">
+           <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]"></div>
+           <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Insight Core Active</span>
+        </div>
+
         {/* Quick Help */}
-        <button className="p-3 text-white/40 hover:text-secondary hover:bg-secondary/10 rounded-2xl transition-all group">
+        <button className="p-3 text-white/40 hover:text-secondary transition-all group">
           <HelpCircle size={22} />
         </button>
+
 
         {/* Notifications */}
         <div className="relative group">
