@@ -56,7 +56,7 @@ function CustomViewContent() {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center p-20 glass rounded-[4rem] text-center space-y-6">
+      <div className="flex flex-col items-center justify-center p-20 glass rounded-3xl text-center space-y-6">
         <AlertCircle size={64} className="text-rose-500 animate-pulse" />
         <h2 className="text-2xl font-black">{error}</h2>
         <Link href="/" className="flex items-center gap-2 text-secondary hover:underline">
@@ -76,30 +76,30 @@ function CustomViewContent() {
   }
 
   return (
-    <div className="space-y-10 font-rubik">
+    <div className="space-y-6 font-rubik">
       <div className="flex justify-between items-center">
         <div>
-           <h1 className="text-4xl font-black mb-2">{pageInfo.label}</h1>
+           <h1 className="text-xl font-black mb-2">{pageInfo.label}</h1>
            <p className="text-sidebar-text">إدارة بيانات القسم المخصص: {pageInfo.label}.</p>
         </div>
         <button 
           onClick={() => setIsModalOpen(true)}
-          className="bg-secondary text-primary px-8 py-4 rounded-[2rem] font-black flex items-center gap-2 shadow-xl hover:scale-105 transition-all"
+          className="bg-secondary text-primary px-8 py-4 rounded-xl font-black flex items-center gap-2 shadow-xl hover:scale-105 transition-all"
         >
           <Plus size={20} /> إضافة سجل جديد
         </button>
       </div>
 
-      <div className="glass p-10 rounded-[4rem] border border-white/5 bg-white/[0.01]">
+      <div className="glass p-6 rounded-3xl border border-white/5 bg-white/[0.01]">
          {data.length === 0 && !dataLoading ? (
-           <div className="py-20 text-center border-2 border-dashed border-white/5 rounded-[3rem]">
-              <Database size={48} className="mx-auto text-white/10 mb-4" />
+           <div className="py-20 text-center border-2 border-dashed border-white/5 rounded-3xl">
+              <Database size={24} className="mx-auto text-white/10 mb-4" />
               <p className="text-sidebar-text font-medium">هذا القسم فارغ حالياً.</p>
            </div>
          ) : (
            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {data.map((item) => (
-                <div key={item.id} className="p-8 rounded-[3rem] bg-white/[0.01] border border-white/5 hover:border-secondary/20 transition-all group">
+                <div key={item.id} className="p-8 rounded-3xl bg-white/[0.01] border border-white/5 hover:border-secondary/20 transition-all group">
                    <div className="flex justify-between items-start mb-6">
                       <div className="w-12 h-12 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary">
                          <FileText size={24} />

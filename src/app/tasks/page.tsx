@@ -6,10 +6,10 @@ import { CheckCircle2, Clock, AlertCircle, Plus, Filter } from "lucide-react";
 
 export default function TasksPage() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold mb-2">إدارة المهام</h1>
+          <h1 className="text-xl font-bold mb-2">إدارة المهام</h1>
           <p className="text-sidebar-text">تنظيم ومتابعة المهام الإدارية والتشغيلية للفريق.</p>
         </div>
         <div className="flex gap-3">

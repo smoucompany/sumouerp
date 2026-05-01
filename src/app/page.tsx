@@ -28,17 +28,17 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="space-y-10 font-rubik">
+    <div className="space-y-6 font-rubik">
       {/* Welcome & Quick Actions Section */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         <div className="xl:col-span-2 space-y-4">
            <motion.div 
              initial={{ opacity: 0, x: -20 }}
              animate={{ opacity: 1, x: 0 }}
-             className="relative p-12 rounded-[4rem] overflow-hidden border border-white/5 bg-gradient-to-br from-secondary/10 to-transparent group"
+             className="relative p-6 rounded-3xl overflow-hidden border border-white/5 bg-gradient-to-br from-secondary/10 to-transparent group"
            >
               <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-secondary/10 transition-colors"></div>
-              <h1 className="text-5xl font-black mb-4 tracking-tighter">مرحباً بك في <span className="text-secondary">Sumou ERP</span></h1>
+              <h1 className="text-2xl font-black mb-4 tracking-tighter">مرحباً بك في <span className="text-secondary">Sumou ERP</span></h1>
               <p className="text-sidebar-text text-xl max-w-xl leading-relaxed">أهلاً بك مجدداً. النظام يراقب الآن كافة العمليات والوثائق لضمان استمرارية عمل مؤسستك بكفاءة عالية.</p>
               
               <div className="mt-10 flex gap-4">
@@ -57,10 +57,10 @@ export default function Dashboard() {
              <Link key={idx} href={action.href}>
                 <motion.div 
                   whileHover={{ y: -5, scale: 1.02 }}
-                  className="h-full p-6 rounded-[2.5rem] bg-white/[0.02] border border-white/5 flex flex-col items-center justify-center text-center gap-4 hover:bg-white/[0.05] hover:border-secondary/20 transition-all cursor-pointer group"
+                  className="h-full p-6 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col items-center justify-center text-center gap-4 hover:bg-white/[0.05] hover:border-secondary/20 transition-all cursor-pointer group"
                 >
                    <div className={`w-14 h-14 rounded-2xl bg-${action.color}/10 flex items-center justify-center text-${action.color} group-hover:scale-110 transition-transform`}>
-                      <action.icon size={28} />
+                      <action.icon size={18} />
                    </div>
                    <span className="font-black text-sm">{action.label}</span>
                    <ArrowUpRight size={14} className="text-white/10 group-hover:text-secondary" />
@@ -107,7 +107,7 @@ export default function Dashboard() {
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         <div className="xl:col-span-2">
           <FinancialChart />
         </div>

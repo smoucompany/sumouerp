@@ -62,16 +62,16 @@ export default function CRPage() {
   };
 
   return (
-    <div className="space-y-10 font-rubik">
+    <div className="space-y-6 font-rubik">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-black mb-2 tracking-tight">السجلات التجارية (CR)</h1>
+          <h1 className="text-xl font-black mb-2 tracking-tight">السجلات التجارية (CR)</h1>
           <p className="text-sidebar-text font-medium text-lg">إدارة السجلات التجارية للمركز الرئيسي والفروع.</p>
         </div>
         <button 
           onClick={() => setIsModalOpen(true)}
-          className="bg-secondary text-primary px-10 py-5 rounded-[2.5rem] font-black text-sm flex items-center gap-3 shadow-2xl shadow-secondary/20 hover:scale-105 transition-all"
+          className="bg-secondary text-primary px-5 py-3 rounded-2xl font-black text-sm flex items-center gap-3 shadow-2xl shadow-secondary/20 hover:scale-105 transition-all"
         >
           <Plus size={22} />
           إضافة سجل تجاري جديد
@@ -84,7 +84,7 @@ export default function CRPage() {
            <div key={cr.id} className="glass p-8 rounded-[3.5rem] border border-white/5 relative group overflow-hidden hover:border-secondary/20 transition-all bg-white/[0.02]">
               <div className="flex justify-between items-start mb-6">
                  <div className="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary">
-                    <Building size={32} />
+                    <Building size={20} />
                  </div>
                  <span className={`text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full ${cr.status === 'نشط' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'}`}>
                     {cr.status}
@@ -110,7 +110,7 @@ export default function CRPage() {
            </div>
          ))}
          {records.length === 0 && !loading && (
-           <div className="lg:col-span-3 py-24 text-center border-2 border-dashed border-white/5 rounded-[4rem]">
+           <div className="lg:col-span-3 py-24 text-center border-2 border-dashed border-white/5 rounded-3xl">
               <Building size={64} className="mx-auto text-white/5 mb-6" />
               <p className="text-sidebar-text text-xl font-black">لا توجد سجلات تجارية مسجلة حالياً.</p>
            </div>
@@ -122,19 +122,19 @@ export default function CRPage() {
         <div className="p-2">
            {/* Modal Header */}
            <div className="flex items-center justify-between mb-16 border-b border-white/5 pb-10">
-              <div className="flex items-center gap-10 text-right">
-                 <div className="w-24 h-24 bg-secondary/10 rounded-[2.5rem] flex items-center justify-center text-secondary border border-secondary/20 shadow-2xl">
-                    <Building size={48} />
+              <div className="flex items-center gap-6 text-right">
+                 <div className="w-12 h-12 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary border border-secondary/20 shadow-2xl">
+                    <Building size={24} />
                  </div>
                  <div>
-                    <h2 className="text-5xl font-black text-white tracking-tighter">إضافة سجل تجاري جديد</h2>
+                    <h2 className="text-2xl font-black text-white tracking-tighter">إضافة سجل تجاري جديد</h2>
                     <p className="text-white/40 font-bold mt-3 text-xl">يرجى تعبئة كافة الحقول المطلوبة بدقة.</p>
                  </div>
               </div>
            </div>
 
-           <form onSubmit={handleSubmit} className="space-y-14">
-              <div className="grid grid-cols-2 gap-x-16 gap-y-12">
+           <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-6">
                  
                  {/* Row 1 */}
                  <div className="space-y-5 text-right">
@@ -143,7 +143,7 @@ export default function CRPage() {
                        <input 
                          required placeholder="اسم الفرع أو المؤسسة" value={formData.name}
                          onChange={(e) => setFormData({...formData, name: e.target.value})}
-                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5" 
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-3 px-5 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5" 
                        />
                     </div>
                  </div>
@@ -153,7 +153,7 @@ export default function CRPage() {
                        <input 
                          required placeholder="رقم السجل التجاري" value={formData.crNumber}
                          onChange={(e) => setFormData({...formData, crNumber: e.target.value})}
-                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5 font-mono tracking-widest" 
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-3 px-5 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5 font-mono tracking-widest" 
                        />
                     </div>
                  </div>
@@ -165,7 +165,7 @@ export default function CRPage() {
                        <input 
                          required placeholder="المدينة أو المنطقة" value={formData.location}
                          onChange={(e) => setFormData({...formData, location: e.target.value})}
-                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5" 
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-3 px-5 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5" 
                        />
                     </div>
                  </div>
@@ -175,9 +175,9 @@ export default function CRPage() {
                        <input 
                          required type="date" value={formData.issueDate}
                          onChange={(e) => setFormData({...formData, issueDate: e.target.value})}
-                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right appearance-none" 
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-3 px-5 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right appearance-none" 
                        />
-                       <Calendar className="absolute left-10 top-1/2 -translate-y-1/2 text-white/10" size={28} />
+                       <Calendar className="absolute left-10 top-1/2 -translate-y-1/2 text-white/10" size={18} />
                     </div>
                  </div>
 
@@ -188,9 +188,9 @@ export default function CRPage() {
                        <input 
                          required type="date" value={formData.expiryDate}
                          onChange={(e) => setFormData({...formData, expiryDate: e.target.value})}
-                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right appearance-none" 
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-3 px-5 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right appearance-none" 
                        />
-                       <Calendar className="absolute left-10 top-1/2 -translate-y-1/2 text-white/10" size={28} />
+                       <Calendar className="absolute left-10 top-1/2 -translate-y-1/2 text-white/10" size={18} />
                     </div>
                  </div>
                  <div className="space-y-5 text-right">
@@ -199,9 +199,9 @@ export default function CRPage() {
                        <input 
                          required type="date" value={formData.registerDate}
                          onChange={(e) => setFormData({...formData, registerDate: e.target.value})}
-                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right appearance-none" 
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-3 px-5 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right appearance-none" 
                        />
-                       <Calendar className="absolute left-10 top-1/2 -translate-y-1/2 text-white/10" size={28} />
+                       <Calendar className="absolute left-10 top-1/2 -translate-y-1/2 text-white/10" size={18} />
                     </div>
                  </div>
 
@@ -212,7 +212,7 @@ export default function CRPage() {
                        <input 
                          placeholder="الرقم الضريبي للمنشأة" value={formData.taxNumber}
                          onChange={(e) => setFormData({...formData, taxNumber: e.target.value})}
-                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5 font-mono tracking-widest" 
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-3 px-5 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5 font-mono tracking-widest" 
                        />
                     </div>
                  </div>
@@ -229,11 +229,11 @@ export default function CRPage() {
                  </div>
               </div>
 
-              <div className="pt-16 flex gap-10">
-                 <button type="submit" className="flex-[2] bg-secondary text-primary py-8 rounded-[3rem] font-black text-2xl shadow-2xl shadow-secondary/20 hover:shadow-secondary/40 hover:scale-[1.01] transition-all flex items-center justify-center gap-6">
-                    <Save size={32} /> حفظ السجل
+              <div className="pt-16 flex gap-6">
+                 <button type="submit" className="flex-[2] bg-secondary text-primary py-4 rounded-3xl font-black text-2xl shadow-2xl shadow-secondary/20 hover:shadow-secondary/40 hover:scale-[1.01] transition-all flex items-center justify-center gap-6">
+                    <Save size={20} /> حفظ السجل
                  </button>
-                 <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 bg-white/[0.03] border border-white/5 py-8 rounded-[3rem] text-white/60 font-black text-lg hover:bg-white/10 transition-all">إلغاء</button>
+                 <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 bg-white/[0.03] border border-white/5 py-4 rounded-3xl text-white/60 font-black text-lg hover:bg-white/10 transition-all">إلغاء</button>
               </div>
            </form>
         </div>

@@ -29,7 +29,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             className="fixed inset-0 flex items-center justify-center pointer-events-none z-[101] p-4"
           >
-            <div className="glass border border-white/10 w-full max-w-3xl rounded-[2.5rem] shadow-[0_0_50px_rgba(0,0,0,0.5)] pointer-events-auto overflow-hidden relative bg-[#060b19]/90 backdrop-blur-3xl transition-all duration-300">
+            <div className="glass border border-white/10 w-full max-w-3xl rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] pointer-events-auto overflow-hidden relative bg-[#060b19]/90 backdrop-blur-3xl transition-all duration-300">
               <div className="p-8 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
                 <h3 className="text-2xl font-black text-white">{title}</h3>
                 <button 
@@ -39,7 +39,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
                   <X size={24} />
                 </button>
               </div>
-              <div className="p-10 max-h-[75vh] overflow-y-auto font-rubik custom-scrollbar">
+              <div className="p-6 max-h-[75vh] overflow-y-auto font-rubik custom-scrollbar">
                 {children}
               </div>
             </div>

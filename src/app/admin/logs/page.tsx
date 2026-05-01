@@ -5,13 +5,13 @@ import { History, User, Search, Filter, ShieldCheck, LogIn, Edit, Trash2 } from 
 
 export default function ActivityLogsPage() {
   return (
-    <div className="space-y-8 font-rubik">
+    <div className="space-y-4 font-rubik">
       <div>
-        <h1 className="text-3xl font-black mb-2">سجلات النشاط</h1>
+        <h1 className="text-xl font-black mb-2">سجلات النشاط</h1>
         <p className="text-sidebar-text font-medium">مراقبة جميع العمليات والتغييرات التي تمت على النظام.</p>
       </div>
 
-      <div className="glass p-10 rounded-[4rem] border border-white/5">
+      <div className="glass p-6 rounded-3xl border border-white/5">
         <div className="flex items-center justify-between mb-8">
            <div className="flex items-center gap-4">
               <div className="p-3 bg-secondary/10 rounded-2xl text-secondary">
@@ -32,7 +32,7 @@ export default function ActivityLogsPage() {
              { action: "حذف مستند مالي", user: "أدمن النظام", time: "قبل ساعة", icon: Trash2, color: "text-rose-500" },
              { action: "تحديث تراخيص", user: "أدمن النظام", time: "قبل 3 ساعات", icon: ShieldCheck, color: "text-emerald-500" },
            ].map((log, idx) => (
-             <div key={idx} className="flex items-center justify-between p-5 rounded-[2rem] bg-white/[0.01] border border-white/5 relative group">
+             <div key={idx} className="flex items-center justify-between p-5 rounded-xl bg-white/[0.01] border border-white/5 relative group">
                 <div className="flex items-center gap-6">
                    <div className={`w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center ${log.color}`}>
                       <log.icon size={20} />

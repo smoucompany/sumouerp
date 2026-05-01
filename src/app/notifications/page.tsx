@@ -13,10 +13,10 @@ const notifications = [
 
 export default function NotificationsPage() {
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <div className="max-w-4xl mx-auto space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">الإشعارات</h1>
+          <h1 className="text-xl font-bold mb-2">الإشعارات</h1>
           <p className="text-sidebar-text">تابع آخر التحديثات والتنبيهات الخاصة بنظامك.</p>
         </div>
         <button className="flex items-center gap-2 text-sm text-secondary hover:underline">
