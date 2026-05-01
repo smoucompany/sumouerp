@@ -2,262 +2,301 @@
 
 import React, { useState } from "react";
 import { 
-  Users, 
-  Search, 
-  Filter, 
-  Plus, 
-  MoreVertical, 
-  Edit, 
+  Users2, 
   Trash2, 
-  Mail, 
+  Plus, 
+  Calendar,
+  Save,
+  Building,
+  Hash,
+  User,
   Phone,
-  Briefcase,
-  Calendar
+  Mail,
+  UserPlus
 } from "lucide-react";
-import { motion } from "framer-motion";
 import { useFirestore } from "@/hooks/useFirestore";
 import Modal from "@/components/shared/Modal";
 import CustomSelect from "@/components/shared/Select";
 
 interface Employee {
   id?: string;
-  name: string;
-  role: string;
-  email: string;
-  phone: string;
+  fullName: string;
+  empId: string;
+  iqamaJob: string;
+  internalJob: string;
   department: string;
+  salary: string;
+  manager: string;
+  email: string;
+  phone1: string;
+  phone2: string;
   joinDate: string;
+  status: string;
+  crLink: string;
 }
 
-export default function EmployeesPage() {
-  const { data: employees, addItem, updateItem, removeItem, loading } = useFirestore<Employee>("employees");
+export default function EmployeesDBPage() {
+  const { data: employees, addItem, removeItem, loading } = useFirestore<Employee>("employees");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
   const [formData, setFormData] = useState<Omit<Employee, 'id'>>({
-    name: "",
-    role: "",
-    email: "",
-    phone: "",
+    fullName: "",
+    empId: "",
+    iqamaJob: "",
+    internalJob: "",
     department: "",
+    salary: "",
+    manager: "",
+    email: "",
+    phone1: "",
+    phone2: "",
     joinDate: new Date().toISOString().split('T')[0],
+    status: "نشط (على رأس العمل)",
+    crLink: "بدون ربط",
   });
-
-  const handleOpenModal = (employee?: Employee) => {
-    if (employee) {
-      setEditingEmployee(employee);
-      setFormData({ ...employee });
-    } else {
-      setEditingEmployee(null);
-      setFormData({
-        name: "",
-        role: "",
-        email: "",
-        phone: "",
-        department: "",
-        joinDate: new Date().toISOString().split('T')[0],
-      });
-    }
-    setIsModalOpen(true);
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      if (editingEmployee?.id) {
-        await updateItem(editingEmployee.id, formData);
-      } else {
-        await addItem(formData);
-      }
-      setIsModalOpen(false);
-    } catch (error) {
-      alert("حدث خطأ أثناء حفظ البيانات. تأكد من إعدادات Firebase.");
-    }
+    await addItem(formData);
+    setIsModalOpen(false);
+    setFormData({
+      fullName: "",
+      empId: "",
+      iqamaJob: "",
+      internalJob: "",
+      department: "",
+      salary: "",
+      manager: "",
+      email: "",
+      phone1: "",
+      phone2: "",
+      joinDate: new Date().toISOString().split('T')[0],
+      status: "نشط (على رأس العمل)",
+      crLink: "بدون ربط",
+    });
   };
 
   return (
-    <div className="space-y-8 font-rubik">
-      {/* Header */}
+    <div className="space-y-10 font-rubik">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-black mb-2">قاعدة بيانات الموظفين</h1>
-          <p className="text-sidebar-text font-medium text-lg">إدارة بيانات موظفي الشركة، إضافة، تعديل وحذف السجلات.</p>
+          <h1 className="text-4xl font-black mb-2 tracking-tight text-white">قاعدة البيانات</h1>
+          <p className="text-sidebar-text font-medium text-lg">سجل الموظفين الشامل وإدارة البيانات الأساسية والهيكلة الإدارية.</p>
         </div>
         <button 
-          onClick={() => handleOpenModal()}
-          className="bg-secondary text-primary px-8 py-4 rounded-[2rem] font-black text-sm flex items-center gap-2 shadow-xl shadow-secondary/20 hover:shadow-secondary/30 transition-all active:scale-95"
+          onClick={() => setIsModalOpen(true)}
+          className="bg-secondary text-primary px-10 py-5 rounded-[2.5rem] font-black text-sm flex items-center gap-3 shadow-2xl shadow-secondary/20 hover:scale-105 transition-all"
         >
-          <Plus size={20} />
+          <Plus size={22} />
           إضافة موظف جديد
         </button>
       </div>
 
-      {/* Main Content Card */}
       <div className="glass p-10 rounded-[4rem] border border-white/5 bg-white/[0.01]">
-         <div className="flex items-center justify-between mb-10">
-            <div className="relative group">
-                <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-secondary transition-colors" />
-                <input 
-                  type="text" 
-                  placeholder="بحث عن موظف..." 
-                  className="bg-white/5 border border-white/5 rounded-2xl py-4 pr-12 pl-6 text-sm focus:outline-none focus:ring-2 focus:ring-secondary/20 w-96 transition-all" 
-                />
-            </div>
-            <div className="flex gap-4">
-               <button className="p-4 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 transition-all text-white/40 hover:text-white">
-                  <Filter size={20} />
-               </button>
-            </div>
+         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {employees.map((emp) => (
+              <div key={emp.id} className="p-10 rounded-[3.5rem] bg-white/[0.02] border border-white/5 hover:border-secondary/20 transition-all group relative overflow-hidden flex flex-col md:flex-row items-center gap-8">
+                 <div className="w-24 h-24 shrink-0 rounded-full bg-secondary/10 flex items-center justify-center text-secondary group-hover:scale-110 transition-transform border-4 border-white/5">
+                    <User size={40} />
+                 </div>
+                 <div className="flex-1 w-full space-y-4">
+                    <div>
+                       <h4 className="font-black text-xl text-white mb-1">{emp.fullName}</h4>
+                       <p className="text-xs text-sidebar-text font-bold uppercase tracking-widest">{emp.internalJob || emp.iqamaJob} • {emp.department}</p>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/5">
+                       <div className="space-y-1">
+                          <span className="text-[10px] text-white/40 font-bold uppercase">الرقم الوظيفي</span>
+                          <p className="text-sm font-mono text-secondary font-bold">{emp.empId}</p>
+                       </div>
+                       <div className="space-y-1">
+                          <span className="text-[10px] text-white/40 font-bold uppercase">الحالة</span>
+                          <p className={`text-[10px] font-bold ${emp.status.includes('نشط') ? 'text-emerald-500' : 'text-white'}`}>{emp.status}</p>
+                       </div>
+                    </div>
+                 </div>
+
+                 <button onClick={() => removeItem(emp.id!)} className="absolute top-8 left-8 p-3 text-rose-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-500/10 rounded-xl">
+                    <Trash2 size={20} />
+                 </button>
+              </div>
+            ))}
          </div>
-
-         {loading ? (
-            <div className="flex items-center justify-center py-20">
-               <div className="w-10 h-10 border-4 border-secondary border-t-transparent rounded-full animate-spin"></div>
-            </div>
-         ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {employees.map((emp) => (
-                <motion.div 
-                  key={emp.id}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-8 rounded-[3rem] bg-white/[0.02] border border-white/5 hover:border-secondary/20 transition-all relative group overflow-hidden"
-                >
-                   <div className="absolute top-0 right-0 w-24 h-24 bg-secondary/5 rounded-bl-[4rem]"></div>
-                   
-                   <div className="flex items-center gap-6 mb-8 relative z-10">
-                      <div className="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-secondary to-amber-600 flex items-center justify-center text-primary font-black text-2xl shadow-xl shadow-secondary/10">
-                         {emp.name.charAt(0)}
-                      </div>
-                      <div>
-                         <h4 className="font-black text-lg group-hover:text-secondary transition-colors">{emp.name}</h4>
-                         <p className="text-xs text-sidebar-text font-bold uppercase tracking-widest mt-1">{emp.role}</p>
-                      </div>
-                   </div>
-
-                   <div className="space-y-4 mb-8">
-                      <div className="flex items-center gap-3 text-sm text-sidebar-text font-medium">
-                         <Mail size={14} className="text-secondary/50" />
-                         <span>{emp.email}</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-sm text-sidebar-text font-medium">
-                         <Phone size={14} className="text-secondary/50" />
-                         <span>{emp.phone}</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-sm text-sidebar-text font-medium">
-                         <Briefcase size={14} className="text-secondary/50" />
-                         <span>{emp.department}</span>
-                      </div>
-                   </div>
-
-                   <div className="pt-6 border-t border-white/5 flex items-center justify-between">
-                      <button 
-                        onClick={() => handleOpenModal(emp)}
-                        className="flex items-center gap-2 text-[10px] font-black uppercase text-secondary tracking-widest hover:bg-secondary/10 px-4 py-2 rounded-xl transition-all"
-                      >
-                         <Edit size={12} /> تعديل
-                      </button>
-                      <button 
-                        onClick={() => removeItem(emp.id!)}
-                        className="flex items-center gap-2 text-[10px] font-black uppercase text-rose-500 tracking-widest hover:bg-rose-500/10 px-4 py-2 rounded-xl transition-all"
-                      >
-                         <Trash2 size={12} /> حذف
-                      </button>
-                   </div>
-                </motion.div>
-              ))}
-            </div>
+         {employees.length === 0 && !loading && (
+           <div className="py-24 text-center border-2 border-dashed border-white/5 rounded-[4rem]">
+              <Users2 size={64} className="mx-auto text-white/5 mb-6" />
+              <p className="text-sidebar-text text-xl font-black">لا يوجد موظفين مسجلين في قاعدة البيانات.</p>
+           </div>
          )}
       </div>
 
-      {/* CRUD Modal */}
-      <Modal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        title={editingEmployee ? "تعديل بيانات موظف" : "إضافة موظف جديد"}
-      >
-        <form onSubmit={handleSubmit} className="space-y-6">
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                 <label className="text-xs font-black text-sidebar-text uppercase tracking-widest px-2">الاسم الكامل</label>
-                 <input 
-                   required
-                   value={formData.name}
-                   onChange={(e) => setFormData({...formData, name: e.target.value})}
-                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm focus:ring-2 focus:ring-secondary/20 outline-none" 
-                   placeholder="أدخل الاسم..."
-                 />
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="">
+        <div className="p-2">
+           <div className="flex items-center justify-between mb-16 border-b border-white/5 pb-10">
+              <div className="flex items-center gap-10 text-right">
+                 <div className="w-24 h-24 bg-secondary/10 rounded-[2.5rem] flex items-center justify-center text-secondary border border-secondary/20 shadow-2xl">
+                    <UserPlus size={48} />
+                 </div>
+                 <div>
+                    <h2 className="text-5xl font-black text-white tracking-tighter">إضافة موظف جديد</h2>
+                    <p className="text-white/40 font-bold mt-3 text-xl">يرجى إدخال كافة البيانات المطلوبة بدقة.</p>
+                 </div>
               </div>
-              <div className="space-y-2">
-                 <label className="text-xs font-black text-sidebar-text uppercase tracking-widest px-2">المسمى الوظيفي</label>
-                 <input 
-                   required
-                   value={formData.role}
-                   onChange={(e) => setFormData({...formData, role: e.target.value})}
-                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm focus:ring-2 focus:ring-secondary/20 outline-none" 
-                   placeholder="مثال: مدير مشاريع"
-                 />
-              </div>
-              <div className="space-y-2">
-                 <label className="text-xs font-black text-sidebar-text uppercase tracking-widest px-2">البريد الإلكتروني</label>
-                 <input 
-                   required
-                   type="email"
-                   value={formData.email}
-                   onChange={(e) => setFormData({...formData, email: e.target.value})}
-                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm focus:ring-2 focus:ring-secondary/20 outline-none" 
-                   placeholder="email@company.sa"
-                 />
-              </div>
-              <div className="space-y-2">
-                 <label className="text-xs font-black text-sidebar-text uppercase tracking-widest px-2">رقم الجوال</label>
-                 <input 
-                   required
-                   value={formData.phone}
-                   onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm focus:ring-2 focus:ring-secondary/20 outline-none" 
-                   placeholder="05XXXXXXXX"
-                 />
-              </div>
-              <CustomSelect 
-                label="القسم"
-                value={formData.department}
-                onChange={(val) => setFormData({...formData, department: val})}
-                options={[
-                  { value: "الإدارة العامة", label: "الإدارة العامة" },
-                  { value: "الموارد البشرية", label: "الموارد البشرية" },
-                  { value: "المالية", label: "المالية" },
-                  { value: "العمليات", label: "العمليات" },
-                  { value: "التقنية", label: "التقنية" }
-                ]}
-              />
+           </div>
 
-              <div className="space-y-2">
-                 <label className="text-xs font-black text-sidebar-text uppercase tracking-widest px-2">تاريخ التعيين</label>
-                 <input 
-                   type="date"
-                   value={formData.joinDate}
-                   onChange={(e) => setFormData({...formData, joinDate: e.target.value})}
-                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm focus:ring-2 focus:ring-secondary/20 outline-none" 
-                 />
+           <form onSubmit={handleSubmit} className="space-y-14">
+              <div className="grid grid-cols-2 gap-x-16 gap-y-12">
+                 
+                 <div className="space-y-5 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">اسم الموظف</label>
+                    <div className="relative group">
+                       <input 
+                         required placeholder="الاسم الكامل" value={formData.fullName}
+                         onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5" 
+                       />
+                    </div>
+                 </div>
+                 <div className="space-y-5 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">الرقم الوظيفي</label>
+                    <div className="relative group">
+                       <input 
+                         required placeholder="مثال: EMP-1001" value={formData.empId}
+                         onChange={(e) => setFormData({...formData, empId: e.target.value})}
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5 font-mono tracking-widest" 
+                       />
+                    </div>
+                 </div>
+
+                 <div className="space-y-5 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">المهنة (حسب الإقامة)</label>
+                    <div className="relative group">
+                       <input 
+                         placeholder="المهنة (اختياري)" value={formData.iqamaJob}
+                         onChange={(e) => setFormData({...formData, iqamaJob: e.target.value})}
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5" 
+                       />
+                    </div>
+                 </div>
+                 <div className="space-y-5 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">المسمى الوظيفي (داخلي)</label>
+                    <div className="relative group">
+                       <input 
+                         placeholder="المسمى الوظيفي" value={formData.internalJob}
+                         onChange={(e) => setFormData({...formData, internalJob: e.target.value})}
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5" 
+                       />
+                    </div>
+                 </div>
+
+                 <div className="space-y-5 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">القسم</label>
+                    <div className="relative group">
+                       <input 
+                         placeholder="اسم القسم" value={formData.department}
+                         onChange={(e) => setFormData({...formData, department: e.target.value})}
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5" 
+                       />
+                    </div>
+                 </div>
+                 <div className="space-y-5 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">الراتب الأساسي</label>
+                    <div className="relative group">
+                       <input 
+                         placeholder="." value={formData.salary}
+                         onChange={(e) => setFormData({...formData, salary: e.target.value})}
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5" 
+                       />
+                    </div>
+                 </div>
+
+                 <div className="space-y-5 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">المدير المباشر</label>
+                    <div className="relative group">
+                       <input 
+                         placeholder="اسم المدير" value={formData.manager}
+                         onChange={(e) => setFormData({...formData, manager: e.target.value})}
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5" 
+                       />
+                    </div>
+                 </div>
+                 <div className="space-y-5 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">البريد الإلكتروني</label>
+                    <div className="relative group">
+                       <input 
+                         type="email" placeholder="example@company.com" value={formData.email}
+                         onChange={(e) => setFormData({...formData, email: e.target.value})}
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5 font-sans" 
+                       />
+                    </div>
+                 </div>
+
+                 <div className="space-y-5 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">رقم الجوال الأساسي</label>
+                    <div className="relative group">
+                       <input 
+                         placeholder="05xxxxxxxx" value={formData.phone1}
+                         onChange={(e) => setFormData({...formData, phone1: e.target.value})}
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5 font-mono tracking-widest" 
+                       />
+                    </div>
+                 </div>
+                 <div className="space-y-5 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">رقم الجوال الإضافي</label>
+                    <div className="relative group">
+                       <input 
+                         placeholder="رقم إضافي" value={formData.phone2}
+                         onChange={(e) => setFormData({...formData, phone2: e.target.value})}
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5 font-mono tracking-widest" 
+                       />
+                    </div>
+                 </div>
+
+                 <div className="space-y-5 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">تاريخ الانضمام</label>
+                    <div className="relative">
+                       <input 
+                         required type="date" value={formData.joinDate}
+                         onChange={(e) => setFormData({...formData, joinDate: e.target.value})}
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-[2.5rem] py-7 px-12 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right appearance-none" 
+                       />
+                       <Calendar className="absolute left-10 top-1/2 -translate-y-1/2 text-white/10" size={28} />
+                    </div>
+                 </div>
+                 <div className="space-y-5 text-right relative z-50">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">الحالة الوظيفية</label>
+                    <CustomSelect 
+                       label="" value={formData.status} 
+                       onChange={(val) => setFormData({...formData, status: val})}
+                       options={[
+                         { value: "نشط (على رأس العمل)", label: "نشط (على رأس العمل)" },
+                         { value: "إجازة", label: "إجازة" },
+                         { value: "منتهي الخدمات", label: "منتهي الخدمات" }
+                       ]} 
+                    />
+                 </div>
+
+                 <div className="col-span-2 space-y-5 text-right relative z-40">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">ربط بالسجل التجاري</label>
+                    <CustomSelect 
+                       label="" value={formData.crLink} 
+                       onChange={(val) => setFormData({...formData, crLink: val})}
+                       options={[
+                         { value: "بدون ربط", label: "بدون ربط" },
+                         { value: "الشركة الرئيسية", label: "الشركة الرئيسية" }
+                       ]} 
+                    />
+                 </div>
               </div>
-           </div>
-           <div className="pt-8 flex gap-4">
-              <button 
-                type="submit"
-                className="flex-1 bg-secondary text-primary py-4 rounded-2xl font-black text-sm shadow-xl shadow-secondary/10 hover:shadow-secondary/20 transition-all"
-              >
-                 {editingEmployee ? "تحديث البيانات" : "حفظ الموظف الجديد"}
-              </button>
-              <button 
-                type="button"
-                onClick={() => setIsModalOpen(false)}
-                className="px-8 py-4 bg-white/5 border border-white/10 rounded-2xl text-sm font-black hover:bg-white/10 transition-all"
-              >
-                 إلغاء
-              </button>
-           </div>
-        </form>
+
+              <div className="pt-16 flex gap-10">
+                 <button type="submit" className="flex-[2] bg-secondary text-primary py-8 rounded-[3rem] font-black text-2xl shadow-2xl shadow-secondary/20 hover:shadow-secondary/40 hover:scale-[1.01] transition-all flex items-center justify-center gap-6">
+                    <UserPlus size={32} /> إضافة الموظف
+                 </button>
+                 <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 bg-white/[0.03] border border-white/5 py-8 rounded-[3rem] text-white/60 font-black text-lg hover:bg-white/10 transition-all">إلغاء</button>
+              </div>
+           </form>
+        </div>
       </Modal>
     </div>
   );
