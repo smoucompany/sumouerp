@@ -11,7 +11,10 @@ import {
   Save,
   CheckCircle2,
   Clock,
-  FileText
+  FileText,
+  Building,
+  Plus,
+  ShieldAlert
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -555,6 +558,51 @@ export default function SettingsPage() {
                   </div>
                </h2>
                <p className="text-sidebar-text">عرض كيف سيظهر التقرير النهائي للمسؤولين بالهوية المختارة.</p>
+            </div>
+         </div>
+      </div>
+
+      {/* 6. إدارة جهات العمل (المؤسسات) */}
+      <div className="glass p-12 rounded-[4rem] border border-white/5 bg-white/[0.01]">
+         <div className="flex items-center justify-end mb-10">
+            <div className="text-right">
+               <h2 className="text-3xl font-black text-white mb-2 flex justify-end items-center gap-4">
+                  إدارة جهات العمل (المؤسسات)
+                  <div className="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary border border-secondary/20">
+                     <Building size={24} />
+                  </div>
+               </h2>
+               <p className="text-sidebar-text">إضافة وإدارة بيانات المؤسسات والشركات التابعة لك.</p>
+            </div>
+         </div>
+         <button className="w-full py-8 border-2 border-dashed border-white/10 hover:border-secondary/50 rounded-[3rem] bg-white/[0.01] hover:bg-white/[0.02] transition-all flex items-center justify-center gap-3 text-white/60 hover:text-white font-bold text-lg group">
+            <Plus className="text-secondary group-hover:scale-125 transition-transform" />
+            إضافة مؤسسة جديدة
+         </button>
+      </div>
+
+      {/* 7. منطقة الخطر */}
+      <div className="glass p-12 rounded-[4rem] border border-rose-500/20 bg-rose-500/[0.02] shadow-[0_0_50px_rgba(244,63,94,0.05)]">
+         <div className="flex items-center justify-end mb-12">
+            <div className="text-right">
+               <h2 className="text-3xl font-black text-rose-500 mb-2 flex justify-end items-center gap-4">
+                  منطقة الخطر
+                  <div className="w-12 h-12 rounded-2xl bg-rose-500/10 flex items-center justify-center text-rose-500 border border-rose-500/20">
+                     <ShieldAlert size={24} />
+                  </div>
+               </h2>
+               <p className="text-sidebar-text">إجراءات حساسة لا يمكن التراجع عنها.</p>
+            </div>
+         </div>
+         <div className="bg-[#0a0508] border border-rose-500/10 rounded-[3rem] p-10 flex flex-col md:flex-row items-center justify-between gap-8">
+            <button className="bg-rose-500 text-white px-10 py-5 rounded-[2.5rem] font-black text-lg shadow-[0_0_30px_rgba(244,63,94,0.3)] hover:scale-105 transition-all shrink-0">
+               مسح قاعدة البيانات
+            </button>
+            <div className="text-right space-y-2">
+               <h4 className="text-xl font-black text-rose-400">حذف جميع بيانات النظام</h4>
+               <p className="text-sidebar-text text-sm leading-relaxed">
+                  سيتم مسح جميع سجلات الموظفين، الإقامات، الجوازات، التراخيص، وكافة البيانات المحفوظة في قاعدة البيانات بشكل نهائي. تأكد من أنك قمت بأخذ نسخة احتياطية قبل المتابعة.
+               </p>
             </div>
          </div>
       </div>

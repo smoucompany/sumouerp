@@ -29,12 +29,12 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             className="fixed inset-0 flex items-center justify-center pointer-events-none z-[101] p-4"
           >
-            <div className="bg-[#0a192f] border border-white/10 w-full max-w-4xl rounded-[3rem] shadow-2xl pointer-events-auto overflow-hidden relative">
+            <div className="glass border border-white/10 w-full max-w-3xl rounded-[2.5rem] shadow-[0_0_50px_rgba(0,0,0,0.5)] pointer-events-auto overflow-hidden relative bg-[#060b19]/90 backdrop-blur-3xl transition-all duration-300">
               <div className="p-8 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
-                <h3 className="text-xl font-black">{title}</h3>
+                <h3 className="text-2xl font-black text-white">{title}</h3>
                 <button 
                   onClick={onClose}
-                  className="p-2 hover:bg-white/10 rounded-xl transition-all"
+                  className="p-3 bg-white/5 hover:bg-rose-500/20 text-white/60 hover:text-rose-500 rounded-2xl transition-all"
                 >
                   <X size={24} />
                 </button>
