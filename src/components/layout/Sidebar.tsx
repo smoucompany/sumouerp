@@ -46,6 +46,7 @@ const defaultGroups = [
       { label: "عقود العمل", href: "/employees/contracts", icon: FileText },
       { label: "الشهادات الصحية", href: "/employees/health", icon: Stethoscope },
       { label: "التأشيرات", href: "/employees/visas", icon: Globe },
+      { label: "تذاكر الطيران", href: "/employees/tickets", icon: Globe },
       { label: "المهام الوظيفية", href: "/employees/tasks", icon: Briefcase },
     ]
   },
