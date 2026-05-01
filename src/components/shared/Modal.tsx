@@ -39,7 +39,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
                   <X size={24} />
                 </button>
               </div>
-              <div className="p-10 max-h-[80vh] overflow-y-visible font-rubik">
+              <div className="p-10 max-h-[75vh] overflow-y-auto font-rubik custom-scrollbar">
                 {children}
               </div>
             </div>
