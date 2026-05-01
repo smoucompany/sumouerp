@@ -29,7 +29,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             className="fixed inset-0 flex items-center justify-center pointer-events-none z-[101] p-4"
           >
-            <div className="bg-[#0a192f] border border-white/10 w-full max-w-2xl rounded-[3rem] shadow-2xl pointer-events-auto overflow-hidden relative">
+            <div className="bg-[#0a192f] border border-white/10 w-full max-w-4xl rounded-[3rem] shadow-2xl pointer-events-auto overflow-hidden relative">
               <div className="p-8 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
                 <h3 className="text-xl font-black">{title}</h3>
                 <button 
