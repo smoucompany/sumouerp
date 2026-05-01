@@ -96,23 +96,23 @@ export default function ReportsPage() {
 
 
   return (
-    <div className="space-y-6 font-rubik">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+    <div className="space-y-3 font-rubik">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-black mb-2 tracking-tight">مركز التقارير الإدارية</h1>
-          <p className="text-sidebar-text font-medium text-lg">تقارير ذكية مستخرجة مباشرة من قاعدة البيانات.</p>
+          <h1 className="text-lg font-black mb-2 tracking-tight">مركز التقارير الإدارية</h1>
+          <p className="text-sidebar-text font-medium text-sm">تقارير ذكية مستخرجة مباشرة من قاعدة البيانات.</p>
         </div>
         <button 
           onClick={() => handlePrint()}
-          className="bg-secondary text-primary px-8 py-4 rounded-xl font-black text-sm flex items-center gap-2 shadow-xl"
+          className="bg-secondary text-primary px-8 py-2 rounded-xl font-black text-sm flex items-center gap-2 shadow-xl"
         >
-          <Printer size={20} /> طباعة تقرير {activeCat.label}
+          <Printer size={16} /> طباعة تقرير {activeCat.label}
         </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="lg:col-span-1 space-y-6">
-          <div className="glass p-8 rounded-3xl border border-white/5 bg-white/[0.01]">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        <div className="lg:col-span-1 space-y-3">
+          <div className="glass p-5 rounded-3xl border border-white/5 bg-white/[0.01]">
             <h3 className="text-[10px] font-black text-sidebar-text uppercase tracking-widest mb-6 flex items-center gap-2">
                <Filter size={14} className="text-secondary" /> تصنيف التقارير
             </h3>
@@ -134,13 +134,13 @@ export default function ReportsPage() {
           </div>
         </div>
 
-        <div className="lg:col-span-3 space-y-6">
+        <div className="lg:col-span-3 space-y-3">
            {loading ? (
              <div className="h-[600px] flex items-center justify-center glass rounded-3xl">
                 <div className="animate-spin rounded-full h-12 w-12 border-4 border-secondary/20 border-t-secondary"></div>
              </div>
            ) : (
-             <div className="glass p-6 rounded-3xl border border-white/5 bg-[#0a192f]/50 overflow-auto flex justify-center min-h-[800px]">
+             <div className="glass p-4 rounded-3xl border border-white/5 bg-[#0a192f]/50 overflow-auto flex justify-center min-h-[800px]">
                 <div className="scale-[0.75] origin-top lg:scale-100">
                    <ReportTemplate 
                      ref={componentRef}

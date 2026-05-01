@@ -79,39 +79,39 @@ export default function SettingsPage() {
   );
 
   return (
-    <div className="space-y-6 font-rubik pb-20">
+    <div className="space-y-3 font-rubik pb-20">
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-black mb-2 tracking-tight text-white flex items-center gap-4">
+          <h1 className="text-lg font-black mb-2 tracking-tight text-white flex items-center gap-4">
             إعدادات النظام
             <span className="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-secondary/10 text-secondary border border-secondary/20 flex items-center gap-2">
                الإدارة العليا <Settings size={12} />
             </span>
           </h1>
-          <p className="text-sidebar-text font-medium text-lg">تخصيص هوية النظام، إشعارات واتساب، وإدارة صلاحيات الوصول.</p>
+          <p className="text-sidebar-text font-medium text-sm">تخصيص هوية النظام، إشعارات واتساب، وإدارة صلاحيات الوصول.</p>
         </div>
       </div>
 
       {/* 1. تفضيلات التنبيهات الشخصية */}
-      <div className="glass p-6 rounded-3xl border border-white/5 bg-white/[0.01]">
+      <div className="glass p-4 rounded-3xl border border-white/5 bg-white/[0.01]">
          <div className="flex items-center justify-between mb-12">
             <div>
-               <h2 className="text-xl font-black text-white mb-2 flex items-center gap-4">
+               <h2 className="text-lg font-black text-white mb-2 flex items-center gap-4">
                   تفضيلات التنبيهات الشخصية
-                  <div className="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary">
-                     <Bell size={24} />
+                  <div className="w-8 h-8 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary">
+                     <Bell size={18} />
                   </div>
                </h2>
                <p className="text-sidebar-text">إدارة قنوات التنبيه وأنواع الإشعارات التي ترغب في استلامها.</p>
             </div>
          </div>
 
-         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10">
-            <div className="space-y-6">
+         <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-10">
+            <div className="space-y-3">
                <h4 className="text-sm font-black text-white/30 uppercase tracking-[0.2em] mb-4">أنواع التنبيهات</h4>
                
-               <div className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl">
+               <div className="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-3xl">
                   <div className="text-right">
                      <h5 className="font-bold text-white mb-1">انتهاء صلاحية الوثائق</h5>
                      <p className="text-xs text-sidebar-text">تنبيهات عند اقتراب انتهاء الوثائق الرسمية.</p>
@@ -119,7 +119,7 @@ export default function SettingsPage() {
                   <Toggle checked={personalAlerts.docsExpiry} onChange={() => setPersonalAlerts({...personalAlerts, docsExpiry: !personalAlerts.docsExpiry})} />
                </div>
                
-               <div className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl">
+               <div className="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-3xl">
                   <div className="text-right">
                      <h5 className="font-bold text-white mb-1">تكليفات المهام</h5>
                      <p className="text-xs text-sidebar-text">تنبيهات عند إسناد مهمة جديدة لك.</p>
@@ -127,7 +127,7 @@ export default function SettingsPage() {
                   <Toggle checked={personalAlerts.tasks} onChange={() => setPersonalAlerts({...personalAlerts, tasks: !personalAlerts.tasks})} />
                </div>
 
-               <div className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl">
+               <div className="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-3xl">
                   <div className="text-right">
                      <h5 className="font-bold text-white mb-1">تحديثات النظام العامة</h5>
                      <p className="text-xs text-sidebar-text">تنبيهات عن الميزات الجديدة والتحسينات.</p>
@@ -136,10 +136,10 @@ export default function SettingsPage() {
                </div>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-3">
                <h4 className="text-sm font-black text-white/30 uppercase tracking-[0.2em] mb-4">قنوات التنبيه</h4>
                
-               <div className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl">
+               <div className="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-3xl">
                   <div className="text-right">
                      <h5 className="font-bold text-white mb-1">تنبيهات المتصفح</h5>
                      <p className="text-xs text-sidebar-text">استلام تنبيهات فورية داخل النظام.</p>
@@ -147,7 +147,7 @@ export default function SettingsPage() {
                   <Toggle checked={personalAlerts.browserAlerts} onChange={() => setPersonalAlerts({...personalAlerts, browserAlerts: !personalAlerts.browserAlerts})} />
                </div>
                
-               <div className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl">
+               <div className="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-3xl">
                   <div className="text-right">
                      <h5 className="font-bold text-white mb-1">تنبيهات البريد الإلكتروني</h5>
                      <p className="text-xs text-sidebar-text">استلام ملخص أسبوعي وتقارير على البريد.</p>
@@ -158,53 +158,53 @@ export default function SettingsPage() {
          </div>
 
          <div className="mt-10">
-            <button onClick={handleSave} className="bg-secondary text-primary px-8 py-4 rounded-xl font-black text-sm shadow-xl hover:scale-105 transition-all flex gap-3 items-center">
+            <button onClick={handleSave} className="bg-secondary text-primary px-8 py-2 rounded-xl font-black text-sm shadow-xl hover:scale-105 transition-all flex gap-3 items-center">
                <Save size={18} /> حفظ تفضيلات التنبيهات
             </button>
          </div>
       </div>
 
       {/* 2. تخصيص النظام والهوية */}
-      <div className="glass p-6 rounded-3xl border border-white/5 bg-white/[0.01]">
+      <div className="glass p-4 rounded-3xl border border-white/5 bg-white/[0.01]">
          <div className="flex items-center justify-between mb-12">
             <div>
-               <h2 className="text-xl font-black text-white mb-2 flex items-center gap-4">
+               <h2 className="text-lg font-black text-white mb-2 flex items-center gap-4">
                   تخصيص النظام والهوية
-                  <div className="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary">
-                     <Palette size={24} />
+                  <div className="w-8 h-8 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary">
+                     <Palette size={18} />
                   </div>
                </h2>
                <p className="text-sidebar-text">تغيير اسم النظام، الألوان الأساسية، والشعار.</p>
             </div>
          </div>
 
-         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+         <div className="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-2 gap-4">
             
             {/* Left Side (Actually Right Side visually for RTL) - Names & URLs */}
-            <div className="space-y-4 text-right order-2 lg:order-1">
-               <div className="space-y-4">
+            <div className="space-y-3 text-right order-2 lg:order-1">
+               <div className="space-y-3">
                   <label className="text-xs font-black text-white/30 uppercase tracking-[0.2em] px-4">اسم النظام</label>
                   <input 
                     value={identity.siteName}
                     onChange={(e) => setIdentity({...identity, siteName: e.target.value})}
-                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-3 px-8 text-lg outline-none focus:ring-4 focus:ring-secondary/10 text-right font-bold text-white" 
+                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-2 px-8 text-sm outline-none focus:ring-4 focus:ring-secondary/10 text-right font-bold text-white" 
                   />
                </div>
-               <div className="space-y-4">
+               <div className="space-y-3">
                   <label className="text-xs font-black text-white/30 uppercase tracking-[0.2em] px-4">رابط الشعار (LOGO URL)</label>
                   <input 
                     value={identity.logoUrl}
                     onChange={(e) => setIdentity({...identity, logoUrl: e.target.value})}
-                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-3 px-8 text-sm outline-none focus:ring-4 focus:ring-secondary/10 text-right font-mono text-sidebar-text" 
+                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-2 px-8 text-sm outline-none focus:ring-4 focus:ring-secondary/10 text-right font-mono text-sidebar-text" 
                   />
                   <p className="text-xs text-white/40 px-4">يفضل استخدام صورة بخلفية شفافة (PNG).</p>
                </div>
-               <div className="space-y-4">
+               <div className="space-y-3">
                   <label className="text-xs font-black text-white/30 uppercase tracking-[0.2em] px-4">أيقونة المتصفح (FAVICON URL)</label>
                   <input 
                     value={identity.faviconUrl}
                     onChange={(e) => setIdentity({...identity, faviconUrl: e.target.value})}
-                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-3 px-8 text-sm outline-none focus:ring-4 focus:ring-secondary/10 text-right font-mono text-sidebar-text" 
+                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-2 px-8 text-sm outline-none focus:ring-4 focus:ring-secondary/10 text-right font-mono text-sidebar-text" 
                   />
                   <p className="text-xs text-white/40 px-4">الأيقونة التي تظهر في تبويب المتصفح.</p>
                </div>
@@ -238,7 +238,7 @@ export default function SettingsPage() {
             </div>
 
             {/* Right Side (Actually Left Side visually for RTL) - Fonts & Sidebars */}
-            <div className="space-y-6 text-right order-1 lg:order-2 border-l border-white/5 pl-10">
+            <div className="space-y-3 text-right order-1 lg:order-2 border-l border-white/5 pl-10">
                <div>
                   <h4 className="text-xs font-black text-white/30 uppercase tracking-[0.2em] mb-6">لون القائمة الجانبية</h4>
                   <div className="grid grid-cols-3 gap-4">
@@ -258,7 +258,7 @@ export default function SettingsPage() {
                               identity.sidebarColor === c.id ? "border-secondary bg-white/5" : "border-white/5 bg-white/[0.01] hover:border-white/20"
                            )}
                         >
-                           <div className="w-12 h-12 rounded-full border border-white/10" style={{ backgroundColor: c.color }} />
+                           <div className="w-8 h-8 rounded-full border border-white/10" style={{ backgroundColor: c.color }} />
                            <span className="text-xs font-bold text-white/70">{c.name}</span>
                         </button>
                      ))}
@@ -267,7 +267,7 @@ export default function SettingsPage() {
 
                <div>
                   <h4 className="text-xs font-black text-white/30 uppercase tracking-[0.2em] mb-6">نوع الخط الأساسي (TYPOGRAPHY)</h4>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                      {[
                         { id: 'cairo', name: 'Cairo (افتراضي)', style: 'font-cairo' },
                         { id: 'tajawal', name: 'Tajawal', style: 'font-tajawal' },
@@ -279,7 +279,7 @@ export default function SettingsPage() {
                            key={f.id}
                            onClick={() => setIdentity({...identity, fontFamily: f.id})}
                            className={cn(
-                              "p-6 rounded-xl flex flex-col items-center justify-center text-center gap-2 transition-all border-2",
+                              "p-4 rounded-xl flex flex-col items-center justify-center text-center gap-2 transition-all border-2",
                               identity.fontFamily === f.id ? "border-secondary bg-white/5" : "border-white/5 bg-white/[0.01] hover:border-white/20"
                            )}
                         >
@@ -296,40 +296,40 @@ export default function SettingsPage() {
          {/* عرض البطاقات والجدول */}
          <div className="mt-12 pt-12 border-t border-white/5">
             <h4 className="text-xs font-black text-white/30 uppercase tracking-[0.2em] mb-6 text-right">طريقة عرض الموظفين</h4>
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                <button 
                   onClick={() => setIdentity({...identity, viewMode: 'cards'})}
                   className={cn(
-                     "p-8 rounded-2xl flex flex-col items-center justify-center gap-4 transition-all border-2",
+                     "p-5 rounded-2xl flex flex-col items-center justify-center gap-4 transition-all border-2",
                      identity.viewMode === 'cards' ? "border-secondary bg-white/5" : "border-white/5 bg-white/[0.01] hover:border-white/20"
                   )}
                >
-                  <Layout size={20} className={identity.viewMode === 'cards' ? "text-secondary" : "text-white/40"} />
-                  <span className="font-bold text-lg text-white">عرض البطاقات (Cards)</span>
+                  <Layout size={16} className={identity.viewMode === 'cards' ? "text-secondary" : "text-white/40"} />
+                  <span className="font-bold text-sm text-white">عرض البطاقات (Cards)</span>
                </button>
                <button 
                   onClick={() => setIdentity({...identity, viewMode: 'list'})}
                   className={cn(
-                     "p-8 rounded-2xl flex flex-col items-center justify-center gap-4 transition-all border-2",
+                     "p-5 rounded-2xl flex flex-col items-center justify-center gap-4 transition-all border-2",
                      identity.viewMode === 'list' ? "border-secondary bg-white/5" : "border-white/5 bg-white/[0.01] hover:border-white/20"
                   )}
                >
-                  <Layout size={20} className={identity.viewMode === 'list' ? "text-secondary" : "text-white/40"} />
-                  <span className="font-bold text-lg text-white">عرض الجدول (List)</span>
+                  <Layout size={16} className={identity.viewMode === 'list' ? "text-secondary" : "text-white/40"} />
+                  <span className="font-bold text-sm text-white">عرض الجدول (List)</span>
                </button>
             </div>
          </div>
 
          <div className="mt-10">
-            <button onClick={handleSave} className="bg-secondary text-primary px-8 py-4 rounded-xl font-black text-sm shadow-xl hover:scale-105 transition-all flex gap-3 items-center">
+            <button onClick={handleSave} className="bg-secondary text-primary px-8 py-2 rounded-xl font-black text-sm shadow-xl hover:scale-105 transition-all flex gap-3 items-center">
                <Save size={18} /> حفظ إعدادات الهوية
             </button>
          </div>
       </div>
 
       {/* 3. تفضيلات عرض البطاقات */}
-      <div className="glass p-6 rounded-3xl border border-white/5 bg-white/[0.01]">
-         <div className="space-y-6">
+      <div className="glass p-4 rounded-3xl border border-white/5 bg-white/[0.01]">
+         <div className="space-y-3">
             <div>
                <h4 className="text-xs font-black text-white/30 uppercase tracking-[0.2em] mb-6 text-right flex items-center justify-end gap-3">
                   حجم البطاقات <Layout size={16}/>
@@ -397,7 +397,7 @@ export default function SettingsPage() {
                         key={template.id}
                         onClick={() => setDisplayPrefs({...displayPrefs, reportStyle: template.id})}
                         className={cn(
-                           "p-6 rounded-xl flex flex-col justify-center text-right gap-2 transition-all border-2",
+                           "p-4 rounded-xl flex flex-col justify-center text-right gap-2 transition-all border-2",
                            displayPrefs.reportStyle === template.id ? "border-secondary bg-white/5" : "border-white/5 bg-white/[0.01] hover:border-white/20"
                         )}
                      >
@@ -408,7 +408,7 @@ export default function SettingsPage() {
                </div>
             </div>
 
-            <div className="pt-10 border-t border-white/5 space-y-6">
+            <div className="pt-10 border-t border-white/5 space-y-3">
                <div className="flex items-center justify-between">
                   <div className="text-right">
                      <h4 className="font-bold text-white mb-1">إشعارات انتهاء الصلاحية</h4>
@@ -417,14 +417,14 @@ export default function SettingsPage() {
                   <Toggle checked={displayPrefs.enableExpiryAlerts} onChange={() => setDisplayPrefs({...displayPrefs, enableExpiryAlerts: !displayPrefs.enableExpiryAlerts})} />
                </div>
 
-               <div className="bg-white/[0.02] border border-white/5 p-8 rounded-3xl flex items-center justify-between">
+               <div className="bg-white/[0.02] border border-white/5 p-5 rounded-3xl flex items-center justify-between">
                   <div className="flex gap-2">
                      {['15 يوم', '30 يوم', '45 يوم', '60 يوم', '90 يوم'].map(day => (
                         <button 
                            key={day}
                            onClick={() => setDisplayPrefs({...displayPrefs, daysToAlert: day})}
                            className={cn(
-                              "px-6 py-3 rounded-3xl font-bold text-sm transition-all",
+                              "px-3 py-2 rounded-3xl font-bold text-sm transition-all",
                               displayPrefs.daysToAlert === day ? "bg-secondary text-primary" : "bg-white/5 text-white/60 hover:bg-white/10"
                            )}
                         >
@@ -437,8 +437,8 @@ export default function SettingsPage() {
                         <h5 className="font-bold text-white">الأيام المتبقية للتنبيه</h5>
                         <p className="text-xs text-white/40 mt-1">سيتم تفعيل الإشعارات عندما يبقى هذا العدد من الأيام.</p>
                      </div>
-                     <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white/40">
-                        <Clock size={20} />
+                     <div className="w-8 h-8 rounded-2xl bg-white/5 flex items-center justify-center text-white/40">
+                        <Clock size={16} />
                      </div>
                   </div>
                </div>
@@ -448,22 +448,22 @@ export default function SettingsPage() {
       </div>
 
       {/* 4. تنبيهات واتساب الذكية */}
-      <div className="glass p-6 rounded-3xl border border-[#25D366]/20 bg-[#25D366]/[0.02] shadow-[0_0_50px_rgba(37,211,102,0.05)]">
+      <div className="glass p-4 rounded-3xl border border-[#25D366]/20 bg-[#25D366]/[0.02] shadow-[0_0_50px_rgba(37,211,102,0.05)]">
          <div className="flex items-center justify-between mb-12">
             <div>
-               <h2 className="text-xl font-black text-white mb-2 flex items-center gap-4">
+               <h2 className="text-lg font-black text-white mb-2 flex items-center gap-4">
                   تنبيهات واتساب الذكية
-                  <div className="w-12 h-12 rounded-2xl bg-[#25D366]/10 flex items-center justify-center text-[#25D366]">
-                     <MessageSquare size={24} />
+                  <div className="w-8 h-8 rounded-2xl bg-[#25D366]/10 flex items-center justify-center text-[#25D366]">
+                     <MessageSquare size={18} />
                   </div>
                </h2>
                <p className="text-sidebar-text">إرسال تنبيهات تلقائية لانتهاء صلاحية الوثائق عبر واتساب.</p>
             </div>
          </div>
 
-         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="space-y-4 text-right order-2 lg:order-1">
-               <div className="space-y-4">
+         <div className="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-3 text-right order-2 lg:order-1">
+               <div className="space-y-3">
                   <label className="text-xs font-black text-white/30 uppercase tracking-[0.2em] px-4">توقيت التنبيهات (أيام قبل الانتهاء)</label>
                   <div className="flex flex-wrap justify-end gap-3">
                      {['1 يوم', '3 يوم', '7 يوم', '15 يوم', '30 يوم'].map(day => (
@@ -471,7 +471,7 @@ export default function SettingsPage() {
                            key={day}
                            onClick={() => setWhatsapp({...whatsapp, alertDays: day})}
                            className={cn(
-                              "px-6 py-3 rounded-[1.5rem] font-bold text-sm transition-all",
+                              "px-3 py-2 rounded-[1.5rem] font-bold text-sm transition-all",
                               whatsapp.alertDays === day ? "bg-[#25D366] text-white" : "bg-white/5 text-white/60 hover:bg-white/10"
                            )}
                         >
@@ -481,19 +481,19 @@ export default function SettingsPage() {
                   </div>
                </div>
                
-               <div className="space-y-4">
+               <div className="space-y-3">
                   <label className="text-xs font-black text-white/30 uppercase tracking-[0.2em] px-4">قالب الرسالة</label>
                   <textarea 
                     value={whatsapp.messageTemplate}
                     onChange={(e) => setWhatsapp({...whatsapp, messageTemplate: e.target.value})}
-                    className="w-full h-24 bg-white/[0.02] border border-white/10 rounded-xl py-3 px-8 text-sm outline-none focus:ring-4 focus:ring-[#25D366]/10 text-right font-bold text-white resize-none" 
+                    className="w-full h-24 bg-white/[0.02] border border-white/10 rounded-xl py-2 px-8 text-sm outline-none focus:ring-4 focus:ring-[#25D366]/10 text-right font-bold text-white resize-none" 
                   />
                   <p className="text-xs text-white/40 px-4">استخدم {"{name}"} لاسم الموظف و {"{date}"} لتاريخ الانتهاء.</p>
                </div>
             </div>
 
-            <div className="space-y-4 text-right order-1 lg:order-2">
-               <div className="flex items-center justify-between p-8 bg-white/[0.02] border border-white/5 rounded-3xl">
+            <div className="space-y-3 text-right order-1 lg:order-2">
+               <div className="flex items-center justify-between p-5 bg-white/[0.02] border border-white/5 rounded-3xl">
                   <div className="text-right">
                      <h5 className="font-bold text-white mb-1">تفعيل التنبيهات</h5>
                      <p className="text-xs text-sidebar-text">إرسال رسائل تلقائية للمسؤولين.</p>
@@ -514,23 +514,23 @@ export default function SettingsPage() {
                   </button>
                </div>
 
-               <div className="space-y-4">
+               <div className="space-y-3">
                   <label className="text-xs font-black text-white/30 uppercase tracking-[0.2em] px-4">رقم هاتف المسؤول</label>
                   <input 
                     value={whatsapp.phoneNumber}
                     onChange={(e) => setWhatsapp({...whatsapp, phoneNumber: e.target.value})}
-                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-3 px-8 text-lg outline-none focus:ring-4 focus:ring-[#25D366]/10 text-right font-mono tracking-widest text-sidebar-text" 
+                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-2 px-8 text-sm outline-none focus:ring-4 focus:ring-[#25D366]/10 text-right font-mono tracking-widest text-sidebar-text" 
                     dir="ltr"
                   />
                </div>
                
-               <div className="space-y-4">
+               <div className="space-y-3">
                   <label className="text-xs font-black text-white/30 uppercase tracking-[0.2em] px-4">مفتاح (API (TWILIO/CLOUD</label>
                   <input 
                     type="password"
                     value={whatsapp.apiKey}
                     onChange={(e) => setWhatsapp({...whatsapp, apiKey: e.target.value})}
-                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-3 px-8 text-lg outline-none focus:ring-4 focus:ring-[#25D366]/10 text-right font-mono tracking-widest text-sidebar-text" 
+                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-2 px-8 text-sm outline-none focus:ring-4 focus:ring-[#25D366]/10 text-right font-mono tracking-widest text-sidebar-text" 
                     dir="ltr"
                   />
                </div>
@@ -538,23 +538,23 @@ export default function SettingsPage() {
          </div>
 
          <div className="mt-10">
-            <button onClick={handleSave} className="bg-[#25D366] text-white px-8 py-4 rounded-xl font-black text-sm shadow-xl hover:scale-105 transition-all flex gap-3 items-center">
+            <button onClick={handleSave} className="bg-[#25D366] text-white px-8 py-2 rounded-xl font-black text-sm shadow-xl hover:scale-105 transition-all flex gap-3 items-center">
                <Save size={18} /> حفظ إعدادات واتساب
             </button>
          </div>
       </div>
 
       {/* 5. معاينة تصميم التقرير */}
-      <div className="glass p-6 rounded-3xl border border-white/5 bg-white/[0.01]">
+      <div className="glass p-4 rounded-3xl border border-white/5 bg-white/[0.01]">
          <div className="flex items-center justify-between">
-            <button className="bg-secondary text-primary px-5 py-3 rounded-2xl font-black text-lg shadow-xl shadow-secondary/20 hover:scale-105 transition-all flex gap-3 items-center">
-               فتح المعاينة <Eye size={20} />
+            <button className="bg-secondary text-primary px-3 py-2 rounded-2xl font-black text-sm shadow-xl shadow-secondary/20 hover:scale-105 transition-all flex gap-3 items-center">
+               فتح المعاينة <Eye size={16} />
             </button>
             <div className="text-right">
-               <h2 className="text-xl font-black text-white mb-2 flex justify-end items-center gap-4">
+               <h2 className="text-lg font-black text-white mb-2 flex justify-end items-center gap-4">
                   معاينة تصميم التقرير
-                  <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white/60">
-                     <FileText size={24} />
+                  <div className="w-8 h-8 rounded-2xl bg-white/5 flex items-center justify-center text-white/60">
+                     <FileText size={18} />
                   </div>
                </h2>
                <p className="text-sidebar-text">عرض كيف سيظهر التقرير النهائي للمسؤولين بالهوية المختارة.</p>
@@ -563,43 +563,43 @@ export default function SettingsPage() {
       </div>
 
       {/* 6. إدارة جهات العمل (المؤسسات) */}
-      <div className="glass p-6 rounded-3xl border border-white/5 bg-white/[0.01]">
+      <div className="glass p-4 rounded-3xl border border-white/5 bg-white/[0.01]">
          <div className="flex items-center justify-end mb-10">
             <div className="text-right">
-               <h2 className="text-xl font-black text-white mb-2 flex justify-end items-center gap-4">
+               <h2 className="text-lg font-black text-white mb-2 flex justify-end items-center gap-4">
                   إدارة جهات العمل (المؤسسات)
-                  <div className="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary border border-secondary/20">
-                     <Building size={24} />
+                  <div className="w-8 h-8 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary border border-secondary/20">
+                     <Building size={18} />
                   </div>
                </h2>
                <p className="text-sidebar-text">إضافة وإدارة بيانات المؤسسات والشركات التابعة لك.</p>
             </div>
          </div>
-         <button className="w-full py-4 border-2 border-dashed border-white/10 hover:border-secondary/50 rounded-3xl bg-white/[0.01] hover:bg-white/[0.02] transition-all flex items-center justify-center gap-3 text-white/60 hover:text-white font-bold text-lg group">
+         <button className="w-full py-2 border-2 border-dashed border-white/10 hover:border-secondary/50 rounded-3xl bg-white/[0.01] hover:bg-white/[0.02] transition-all flex items-center justify-center gap-3 text-white/60 hover:text-white font-bold text-sm group">
             <Plus className="text-secondary group-hover:scale-125 transition-transform" />
             إضافة مؤسسة جديدة
          </button>
       </div>
 
       {/* 7. منطقة الخطر */}
-      <div className="glass p-6 rounded-3xl border border-rose-500/20 bg-rose-500/[0.02] shadow-[0_0_50px_rgba(244,63,94,0.05)]">
+      <div className="glass p-4 rounded-3xl border border-rose-500/20 bg-rose-500/[0.02] shadow-[0_0_50px_rgba(244,63,94,0.05)]">
          <div className="flex items-center justify-end mb-12">
             <div className="text-right">
-               <h2 className="text-xl font-black text-rose-500 mb-2 flex justify-end items-center gap-4">
+               <h2 className="text-lg font-black text-rose-500 mb-2 flex justify-end items-center gap-4">
                   منطقة الخطر
-                  <div className="w-12 h-12 rounded-2xl bg-rose-500/10 flex items-center justify-center text-rose-500 border border-rose-500/20">
-                     <ShieldAlert size={24} />
+                  <div className="w-8 h-8 rounded-2xl bg-rose-500/10 flex items-center justify-center text-rose-500 border border-rose-500/20">
+                     <ShieldAlert size={18} />
                   </div>
                </h2>
                <p className="text-sidebar-text">إجراءات حساسة لا يمكن التراجع عنها.</p>
             </div>
          </div>
-         <div className="bg-[#0a0508] border border-rose-500/10 rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-8">
-            <button className="bg-rose-500 text-white px-5 py-3 rounded-2xl font-black text-lg shadow-[0_0_30px_rgba(244,63,94,0.3)] hover:scale-105 transition-all shrink-0">
+         <div className="bg-[#0a0508] border border-rose-500/10 rounded-3xl p-4 flex flex-col md:flex-row items-center justify-between gap-5">
+            <button className="bg-rose-500 text-white px-3 py-2 rounded-2xl font-black text-sm shadow-[0_0_30px_rgba(244,63,94,0.3)] hover:scale-105 transition-all shrink-0">
                مسح قاعدة البيانات
             </button>
             <div className="text-right space-y-2">
-               <h4 className="text-xl font-black text-rose-400">حذف جميع بيانات النظام</h4>
+               <h4 className="text-lg font-black text-rose-400">حذف جميع بيانات النظام</h4>
                <p className="text-sidebar-text text-sm leading-relaxed">
                   سيتم مسح جميع سجلات الموظفين، الإقامات، الجوازات، التراخيص، وكافة البيانات المحفوظة في قاعدة البيانات بشكل نهائي. تأكد من أنك قمت بأخذ نسخة احتياطية قبل المتابعة.
                </p>

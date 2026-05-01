@@ -13,25 +13,25 @@ const folders = [
 
 export default function DocumentsPage() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold mb-2">أرشيف الوثائق</h1>
+          <h1 className="text-lg font-bold mb-2">أرشيف الوثائق</h1>
           <p className="text-sidebar-text">مركز إدارة وحفظ جميع المستندات الرقمية للشركة بشكل آمن.</p>
         </div>
-        <button className="bg-secondary text-primary px-6 py-3 rounded-2xl font-bold flex items-center gap-2">
+        <button className="bg-secondary text-primary px-3 py-2 rounded-2xl font-bold flex items-center gap-2">
           <Plus className="w-5 h-5" />
           رفع مستند جديد
         </button>
       </div>
 
       {/* Folders Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {folders.map((folder, idx) => (
           <motion.div 
             key={idx}
             whileHover={{ y: -5 }}
-            className="glass p-6 rounded-3xl border border-white/10 hover:border-secondary/30 transition-all cursor-pointer group"
+            className="glass p-4 rounded-3xl border border-white/10 hover:border-secondary/30 transition-all cursor-pointer group"
           >
             <Folder className={`w-10 h-10 ${folder.color} mb-4 group-hover:scale-110 transition-transform`} />
             <h4 className="font-bold mb-1">{folder.name}</h4>
@@ -41,9 +41,9 @@ export default function DocumentsPage() {
       </div>
 
       {/* Recent Files Table */}
-      <div className="glass p-8 rounded-[40px] border border-white/10">
+      <div className="glass p-5 rounded-[40px] border border-white/10">
         <div className="flex items-center justify-between mb-8">
-          <h3 className="text-xl font-bold">آخر المستندات المضافة</h3>
+          <h3 className="text-lg font-bold">آخر المستندات المضافة</h3>
           <div className="flex gap-2">
             <button className="p-2 bg-white/5 rounded-lg text-sidebar-text"><Grid size={18}/></button>
             <button className="p-2 bg-secondary text-primary rounded-lg"><List size={18}/></button>
@@ -55,7 +55,7 @@ export default function DocumentsPage() {
             <div key={i} className="flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 hover:bg-white/[0.04] transition-all group">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
-                  <File size={20} className="text-sidebar-text" />
+                  <File size={16} className="text-sidebar-text" />
                 </div>
                 <div>
                   <h5 className="text-sm font-bold">عقد عمل - أحمد الحربي.pdf</h5>

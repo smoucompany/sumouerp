@@ -62,16 +62,16 @@ export default function CRPage() {
   };
 
   return (
-    <div className="space-y-6 font-rubik">
+    <div className="space-y-3 font-rubik">
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-black mb-2 tracking-tight">السجلات التجارية (CR)</h1>
-          <p className="text-sidebar-text font-medium text-lg">إدارة السجلات التجارية للمركز الرئيسي والفروع.</p>
+          <h1 className="text-lg font-black mb-2 tracking-tight">السجلات التجارية (CR)</h1>
+          <p className="text-sidebar-text font-medium text-sm">إدارة السجلات التجارية للمركز الرئيسي والفروع.</p>
         </div>
         <button 
           onClick={() => setIsModalOpen(true)}
-          className="bg-secondary text-primary px-5 py-3 rounded-2xl font-black text-sm flex items-center gap-3 shadow-2xl shadow-secondary/20 hover:scale-105 transition-all"
+          className="bg-secondary text-primary px-3 py-2 rounded-2xl font-black text-sm flex items-center gap-3 shadow-2xl shadow-secondary/20 hover:scale-105 transition-all"
         >
           <Plus size={22} />
           إضافة سجل تجاري جديد
@@ -79,21 +79,21 @@ export default function CRPage() {
       </div>
 
       {/* CR Display */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
          {records.map((cr) => (
-           <div key={cr.id} className="glass p-8 rounded-[3.5rem] border border-white/5 relative group overflow-hidden hover:border-secondary/20 transition-all bg-white/[0.02]">
+           <div key={cr.id} className="glass p-5 rounded-[3.5rem] border border-white/5 relative group overflow-hidden hover:border-secondary/20 transition-all bg-white/[0.02]">
               <div className="flex justify-between items-start mb-6">
-                 <div className="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary">
-                    <Building size={20} />
+                 <div className="w-16 h-12 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary">
+                    <Building size={16} />
                  </div>
                  <span className={`text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full ${cr.status === 'نشط' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'}`}>
                     {cr.status}
                  </span>
               </div>
-              <h3 className="text-xl font-black mb-2 text-white">{cr.name}</h3>
+              <h3 className="text-lg font-black mb-2 text-white">{cr.name}</h3>
               <p className="text-sm font-mono text-sidebar-text mb-6 tracking-widest">{cr.crNumber}</p>
               
-              <div className="space-y-4 pt-6 border-t border-white/5">
+              <div className="space-y-3 pt-6 border-t border-white/5">
                  <div className="flex items-center justify-between text-xs font-bold">
                     <span className="text-sidebar-text">الموقع</span>
                     <span className="text-white">{cr.location}</span>
@@ -104,15 +104,15 @@ export default function CRPage() {
                  </div>
               </div>
 
-              <button onClick={() => removeItem(cr.id!)} className="absolute top-8 left-8 p-3 text-rose-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-500/10 rounded-xl">
-                 <Trash2 size={20} />
+              <button onClick={() => removeItem(cr.id!)} className="absolute top-5 left-8 p-3 text-rose-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-500/10 rounded-xl">
+                 <Trash2 size={16} />
               </button>
            </div>
          ))}
          {records.length === 0 && !loading && (
            <div className="lg:col-span-3 py-24 text-center border-2 border-dashed border-white/5 rounded-3xl">
               <Building size={64} className="mx-auto text-white/5 mb-6" />
-              <p className="text-sidebar-text text-xl font-black">لا توجد سجلات تجارية مسجلة حالياً.</p>
+              <p className="text-sidebar-text text-lg font-black">لا توجد سجلات تجارية مسجلة حالياً.</p>
            </div>
          )}
       </div>
@@ -122,102 +122,102 @@ export default function CRPage() {
         <div className="p-2">
            {/* Modal Header */}
            <div className="flex items-center justify-between mb-16 border-b border-white/5 pb-10">
-              <div className="flex items-center gap-6 text-right">
-                 <div className="w-12 h-12 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary border border-secondary/20 shadow-2xl">
-                    <Building size={24} />
+              <div className="flex items-center gap-4 text-right">
+                 <div className="w-8 h-8 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary border border-secondary/20 shadow-2xl">
+                    <Building size={18} />
                  </div>
                  <div>
-                    <h2 className="text-2xl font-black text-white tracking-tighter">إضافة سجل تجاري جديد</h2>
-                    <p className="text-white/40 font-bold mt-3 text-xl">يرجى تعبئة كافة الحقول المطلوبة بدقة.</p>
+                    <h2 className="text-xl font-black text-white tracking-tighter">إضافة سجل تجاري جديد</h2>
+                    <p className="text-white/40 font-bold mt-3 text-lg">يرجى تعبئة كافة الحقول المطلوبة بدقة.</p>
                  </div>
               </div>
            </div>
 
-           <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-2 gap-x-6 gap-y-6">
+           <form onSubmit={handleSubmit} className="space-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4">
                  
                  {/* Row 1 */}
-                 <div className="space-y-5 text-right">
-                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">اسم المنشأة</label>
+                 <div className="space-y-3 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-3">اسم المنشأة</label>
                     <div className="relative group">
                        <input 
                          required placeholder="اسم الفرع أو المؤسسة" value={formData.name}
                          onChange={(e) => setFormData({...formData, name: e.target.value})}
-                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-3 px-5 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5" 
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-2 px-3 text-sm outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5" 
                        />
                     </div>
                  </div>
-                 <div className="space-y-5 text-right">
-                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">رقم السجل</label>
+                 <div className="space-y-3 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-3">رقم السجل</label>
                     <div className="relative group">
                        <input 
                          required placeholder="رقم السجل التجاري" value={formData.crNumber}
                          onChange={(e) => setFormData({...formData, crNumber: e.target.value})}
-                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-3 px-5 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5 font-mono tracking-widest" 
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-2 px-3 text-sm outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5 font-mono tracking-widest" 
                        />
                     </div>
                  </div>
 
                  {/* Row 2 */}
-                 <div className="space-y-5 text-right">
-                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">الموقع</label>
+                 <div className="space-y-3 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-3">الموقع</label>
                     <div className="relative group">
                        <input 
                          required placeholder="المدينة أو المنطقة" value={formData.location}
                          onChange={(e) => setFormData({...formData, location: e.target.value})}
-                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-3 px-5 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5" 
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-2 px-3 text-sm outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5" 
                        />
                     </div>
                  </div>
-                 <div className="space-y-5 text-right">
-                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">تاريخ الإصدار</label>
+                 <div className="space-y-3 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-3">تاريخ الإصدار</label>
                     <div className="relative">
                        <input 
                          required type="date" value={formData.issueDate}
                          onChange={(e) => setFormData({...formData, issueDate: e.target.value})}
-                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-3 px-5 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right appearance-none" 
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-2 px-3 text-sm outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right appearance-none" 
                        />
                        <Calendar className="absolute left-10 top-1/2 -translate-y-1/2 text-white/10" size={18} />
                     </div>
                  </div>
 
                  {/* Row 3 */}
-                 <div className="space-y-5 text-right">
-                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">تاريخ الانتهاء</label>
+                 <div className="space-y-3 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-3">تاريخ الانتهاء</label>
                     <div className="relative">
                        <input 
                          required type="date" value={formData.expiryDate}
                          onChange={(e) => setFormData({...formData, expiryDate: e.target.value})}
-                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-3 px-5 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right appearance-none" 
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-2 px-3 text-sm outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right appearance-none" 
                        />
                        <Calendar className="absolute left-10 top-1/2 -translate-y-1/2 text-white/10" size={18} />
                     </div>
                  </div>
-                 <div className="space-y-5 text-right">
-                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">تاريخ التسجيل</label>
+                 <div className="space-y-3 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-3">تاريخ التسجيل</label>
                     <div className="relative">
                        <input 
                          required type="date" value={formData.registerDate}
                          onChange={(e) => setFormData({...formData, registerDate: e.target.value})}
-                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-3 px-5 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right appearance-none" 
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-2 px-3 text-sm outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right appearance-none" 
                        />
                        <Calendar className="absolute left-10 top-1/2 -translate-y-1/2 text-white/10" size={18} />
                     </div>
                  </div>
 
                  {/* Row 4 */}
-                 <div className="space-y-5 text-right">
-                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">الرقم الضريبي (اختياري)</label>
+                 <div className="space-y-3 text-right">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-3">الرقم الضريبي (اختياري)</label>
                     <div className="relative group">
                        <input 
                          placeholder="الرقم الضريبي للمنشأة" value={formData.taxNumber}
                          onChange={(e) => setFormData({...formData, taxNumber: e.target.value})}
-                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-3 px-5 text-lg outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5 font-mono tracking-widest" 
+                         className="w-full bg-white/[0.01] border border-white/10 rounded-2xl py-2 px-3 text-sm outline-none focus:ring-8 focus:ring-secondary/5 focus:border-secondary/40 transition-all text-right placeholder:text-white/5 font-mono tracking-widest" 
                        />
                     </div>
                  </div>
-                 <div className="space-y-5 text-right relative z-50">
-                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-6">جهة العمل / الكفيل <span className="text-rose-500">*</span></label>
+                 <div className="space-y-3 text-right relative z-50">
+                    <label className="text-sm font-black text-white/20 uppercase tracking-[0.2em] px-3">جهة العمل / الكفيل <span className="text-rose-500">*</span></label>
                     <CustomSelect 
                        label="" value={formData.sponsor} 
                        onChange={(val) => setFormData({...formData, sponsor: val})}
@@ -229,11 +229,11 @@ export default function CRPage() {
                  </div>
               </div>
 
-              <div className="pt-16 flex gap-6">
-                 <button type="submit" className="flex-[2] bg-secondary text-primary py-4 rounded-3xl font-black text-2xl shadow-2xl shadow-secondary/20 hover:shadow-secondary/40 hover:scale-[1.01] transition-all flex items-center justify-center gap-6">
-                    <Save size={20} /> حفظ السجل
+              <div className="pt-16 flex gap-4">
+                 <button type="submit" className="flex-[2] bg-secondary text-primary py-2 rounded-3xl font-black text-xl shadow-2xl shadow-secondary/20 hover:shadow-secondary/40 hover:scale-[1.01] transition-all flex items-center justify-center gap-4">
+                    <Save size={16} /> حفظ السجل
                  </button>
-                 <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 bg-white/[0.03] border border-white/5 py-4 rounded-3xl text-white/60 font-black text-lg hover:bg-white/10 transition-all">إلغاء</button>
+                 <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 bg-white/[0.03] border border-white/5 py-2 rounded-3xl text-white/60 font-black text-sm hover:bg-white/10 transition-all">إلغاء</button>
               </div>
            </form>
         </div>

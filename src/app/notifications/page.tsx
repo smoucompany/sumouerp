@@ -13,10 +13,10 @@ const notifications = [
 
 export default function NotificationsPage() {
   return (
-    <div className="max-w-4xl mx-auto space-y-4">
+    <div className="max-w-4xl mx-auto space-y-3">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold mb-2">الإشعارات</h1>
+          <h1 className="text-lg font-bold mb-2">الإشعارات</h1>
           <p className="text-sidebar-text">تابع آخر التحديثات والتنبيهات الخاصة بنظامك.</p>
         </div>
         <button className="flex items-center gap-2 text-sm text-secondary hover:underline">
@@ -25,17 +25,17 @@ export default function NotificationsPage() {
         </button>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         {notifications.map((n, idx) => (
           <motion.div 
             key={n.id}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: idx * 0.1 }}
-            className="glass p-6 rounded-3xl border border-white/10 hover:border-white/20 transition-all flex items-start gap-6 group"
+            className="glass p-4 rounded-3xl border border-white/10 hover:border-white/20 transition-all flex items-start gap-4 group"
           >
-            <div className={`w-12 h-12 rounded-2xl ${n.bg} ${n.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
-              <n.icon size={24} />
+            <div className={`w-8 h-8 rounded-2xl ${n.bg} ${n.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+              <n.icon size={18} />
             </div>
             <div className="flex-1">
               <div className="flex items-center justify-between mb-1">
